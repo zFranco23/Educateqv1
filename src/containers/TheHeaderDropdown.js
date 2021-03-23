@@ -9,22 +9,34 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
-const TheHeaderDropdown = () => {
+const TheHeaderDropdown = ({ga}) => {
+
+
+  function result(){
+    console.log("adasd");
+    console.log(ga);
+  }
+
   return (
     <CDropdown
       inNav
       className="c-header-nav-items mx-2"
       direction="down"
     >
-      <CDropdownToggle className="c-header-nav-link" caret={false}>
-        <div className="c-avatar">
-          <CImg
-            src={'avatars/9.jpg'}
-            className="c-avatar-img"
-            alt="admin@bootstrapmaster.com"
-          />
-        </div>
-      </CDropdownToggle>
+      <div style={{display:"flex" , alignItems:"center"}}>
+        <p style={{marginTop:"1rem",color:"#333333"}}>!Hola de Nuevo , <span>Alexander</span> !</p>
+        <CDropdownToggle className="c-header-nav-link" caret={false}>
+          
+          <div className="c-avatar">
+            <CImg
+              src={'avatars/11.jpg'}
+              className="c-avatar-img"
+              alt="admin@bootstrapmaster.com"
+            />
+          </div>
+        </CDropdownToggle>
+      </div>
+
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownItem
           header
@@ -80,9 +92,11 @@ const TheHeaderDropdown = () => {
           <CBadge color="primary" className="mfs-auto">42</CBadge>
         </CDropdownItem> */}
         <CDropdownItem divider />
-        <CDropdownItem>
-          <CIcon name="cil-lock-locked" className="mfe-2" />
-          Cerrar sesión
+        <CDropdownItem >
+          <div onClick={()=>ga()}>
+            <CIcon  name="cil-lock-locked" className="mfe-2" />
+            Cerrar sesión
+          </div>
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>

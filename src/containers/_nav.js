@@ -28,19 +28,19 @@ const _nav =  [
       {
         _tag: 'CSidebarNavItem',
         name: 'Ex. Semanales',
-        to: '/base/semanales',
+        to: '/notas/semanales',
         icon: 'cil-circle'
       },
       {
         _tag: 'CSidebarNavItem',
         name: 'Ex. Mensuales',
-        to: '/base/mensuales',
+        to: '/notas/mensuales',
         icon: 'cil-circle'
       },
       {
         _tag: 'CSidebarNavItem',
         name: 'Ex Bimestrales',
-        to: '/base/bimestrales',
+        to: '/notas/bimestrales',
         icon: 'cil-circle'
       },
     ]

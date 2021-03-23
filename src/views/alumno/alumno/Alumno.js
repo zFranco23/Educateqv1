@@ -44,7 +44,7 @@ const data = [
 ]
 
     return (
-        <div style={{ maxWidth: "60%" }}>
+        <div style={{ maxWidth: "100%" }}>
             <MaterialTable
                 columns={columns}
                 data={data}

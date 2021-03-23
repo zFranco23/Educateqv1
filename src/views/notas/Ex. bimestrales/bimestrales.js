@@ -1,7 +1,7 @@
 import React from 'react';
 import MaterialTable from 'material-table';
 
-function Asistencia() {
+function Bimestrales() {
 
     const columns=[
         {
@@ -18,19 +18,20 @@ function Asistencia() {
             field:'nombre'
         },
         {
-            title:'Asistencia',
-            field:'asistencia'
+            title:'Nota',
+            field:'nota',
+            type:"numeric"
         }
     ];
 
     const data = [
     
-        {orden:1, apellido:' Flores Solis',nombre: 'Hector Alexis', asistencia:'A'},
-        {orden:2, apellido:' Dominguez Nonalaya', nombre: 'Alexander Berney', asistencia:'A'},
-        {orden:3, apellido:' Correa Atucsa',nombre: 'Breiner Roiser', asistencia:'A'},
-        {orden:4, apellido:' Hermenegildo Flores', nombre: 'Franco Jossep' , asistencia:'J'},
-        {orden:5, apellido:' Cueva Heras', nombre: 'Kevin Rodrigo', asistencia:'A'},
-        {orden:6, apellido:' Flores Pucho',nombre: 'Juan Carlos', asistencia:'F'}
+        {orden:1, apellido:' Flores Solis',nombre: 'Hector Alexis', nota: 19},
+        {orden:2, apellido:' Dominguez Nonalaya', nombre: 'Alexander Berney', nota: 19},
+        {orden:3, apellido:' Correa Atucsa',nombre: 'Breiner Roiser', nota: 19},
+        {orden:4, apellido:' Hermenegildo Flores', nombre: 'Franco Jossep' , nota: 19},
+        {orden:5, apellido:' Cueva Heras', nombre: 'Kevin Rodrigo', nota: 19},
+        {orden:6, apellido:' Flores Pucho',nombre: 'Juan Carlos', nota: 19}
     ]
 
     return (
@@ -38,17 +39,17 @@ function Asistencia() {
             <MaterialTable
                 columns={columns}
                 data={data}
-                title="Sección A"
+                title="Sección A - Exámenes Bimestrales"
                 actions={[
                     {
                         icon:'edit',
                         tooltip: 'Editar Alumno',
-                        onClick:(event,rowData)=>alert('Has elegido editar la asistencia del alumno:'+rowData.nombre)
+                        onClick:(event,rowData)=>alert('Has elegido editar al alumno:'+rowData.nombre)
                     },
                     {
                         icon:'delete',
                         tooltip: 'Eliminar Alumno',
-                        onClick:(event,rowData)=>window.confirm('¿Estás seguro de eliminar la asistencia del alumno: '+rowData.nombre+'?')
+                        onClick:(event,rowData)=>window.confirm('¿Estás seguro de eliminar al alumno: '+rowData.nombre+'?')
                     }
 
                 ]}
@@ -65,4 +66,4 @@ function Asistencia() {
     )
 }
 
-export default Asistencia
+export default Bimestrales

@@ -1,29 +1,29 @@
 import React from 'react';
 
 const Toaster = React.lazy(() => import('./views/notifications/toaster/Toaster'));
-const Tables = React.lazy(() => import('./views/base/tables/Tables'));
+const Tables = React.lazy(() => import('./views/notas/tables/Tables'));
 
-const Test=React.lazy(()=> import('./views/base/test/Test'))
-const Breadcrumbs = React.lazy(() => import('./views/base/breadcrumbs/Breadcrumbs'));
-const Cards = React.lazy(() => import('./views/base/cards/Cards'));
-const Carousels = React.lazy(() => import('./views/base/carousels/Carousels'));
-const Collapses = React.lazy(() => import('./views/base/collapses/Collapses'));
-const BasicForms = React.lazy(() => import('./views/base/forms/BasicForms'));
-const Semanales = React.lazy(() => import('./views/base/Ex. semanales/semanales'));
-const Mensuales = React.lazy(() => import('./views/base/Ex. mensuales/mensuales'));
-const Bimestrales = React.lazy(() => import('./views/base/Ex. bimestrales/bimestrales'));
+const Test=React.lazy(()=> import('./views/notas/test/Test'))
+const Breadcrumbs = React.lazy(() => import('./views/notas/breadcrumbs/Breadcrumbs'));
+const Cards = React.lazy(() => import('./views/notas/cards/Cards'));
+const Carousels = React.lazy(() => import('./views/notas/carousels/Carousels'));
+const Collapses = React.lazy(() => import('./views/notas/collapses/Collapses'));
+const BasicForms = React.lazy(() => import('./views/notas/forms/BasicForms'));
+const Semanales = React.lazy(() => import('./views/notas/Ex. semanales/semanales'));
+const Mensuales = React.lazy(() => import('./views/notas/Ex. mensuales/mensuales'));
+const Bimestrales = React.lazy(() => import('./views/notas/Ex. bimestrales/bimestrales'));
 
-const Jumbotrons = React.lazy(() => import('./views/base/jumbotrons/Jumbotrons'));
-const ListGroups = React.lazy(() => import('./views/base/list-groups/ListGroups'));
-const Navbars = React.lazy(() => import('./views/base/navbars/Navbars'));
-const Navs = React.lazy(() => import('./views/base/navs/Navs'));
-const Paginations = React.lazy(() => import('./views/base/paginations/Pagnations'));
-const Popovers = React.lazy(() => import('./views/base/popovers/Popovers'));
-const ProgressBar = React.lazy(() => import('./views/base/progress-bar/ProgressBar'));
-const Switches = React.lazy(() => import('./views/base/switches/Switches'));
+const Jumbotrons = React.lazy(() => import('./views/notas/jumbotrons/Jumbotrons'));
+const ListGroups = React.lazy(() => import('./views/notas/list-groups/ListGroups'));
+const Navbars = React.lazy(() => import('./views/notas/navbars/Navbars'));
+const Navs = React.lazy(() => import('./views/notas/navs/Navs'));
+const Paginations = React.lazy(() => import('./views/notas/paginations/Pagnations'));
+const Popovers = React.lazy(() => import('./views/notas/popovers/Popovers'));
+const ProgressBar = React.lazy(() => import('./views/notas/progress-bar/ProgressBar'));
+const Switches = React.lazy(() => import('./views/notas/switches/Switches'));
 
-const Tabs = React.lazy(() => import('./views/base/tabs/Tabs'));
-const Tooltips = React.lazy(() => import('./views/base/tooltips/Tooltips'));
+const Tabs = React.lazy(() => import('./views/notas/tabs/Tabs'));
+const Tooltips = React.lazy(() => import('./views/notas/tooltips/Tooltips'));
 const BrandButtons = React.lazy(() => import('./views/buttons/brand-buttons/BrandButtons'));
 const ButtonDropdowns = React.lazy(() => import('./views/buttons/button-dropdowns/ButtonDropdowns'));
 const ButtonGroups = React.lazy(() => import('./views/buttons/button-groups/ButtonGroups'));
@@ -59,27 +59,27 @@ const routes = [
   { path: '/alumno/observaciones', name: 'Observaciones', component: Observaciones },
   { path: '/alumno/colors', name: 'Colors', component: Colors },
   { path: '/alumno/typography', name: 'Typography', component: Typography },
-  { path: '/base', name: 'Base', component: Cards, exact: true },
-  { path: '/base/test', name: 'Test', component: Test },
-  { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },
-  { path: '/base/cards', name: 'Cards', component: Cards },
-  { path: '/base/carousels', name: 'Carousel', component: Carousels },
-  { path: '/base/collapses', name: 'Collapse', component: Collapses },
-  { path: '/base/forms', name: 'Forms', component: BasicForms },
-  { path: '/base/jumbotrons', name: 'Jumbotrons', component: Jumbotrons },
-  { path: '/base/list-groups', name: 'List Groups', component: ListGroups },
-  { path: '/base/navbars', name: 'Navbars', component: Navbars },
-  { path: '/base/navs', name: 'Navs', component: Navs },
-  { path: '/base/paginations', name: 'Paginations', component: Paginations },
-  { path: '/base/popovers', name: 'Popovers', component: Popovers },
-  { path: '/base/progress-bar', name: 'Progress Bar', component: ProgressBar },
-  { path: '/base/switches', name: 'Switches', component: Switches },
-  { path: '/base/tables', name: 'Tables', component: Tables },
-  { path: '/base/tabs', name: 'Tabs', component: Tabs },
-  { path: '/base/tooltips', name: 'Tooltips', component: Tooltips },
-  { path: '/base/semanales', name: 'Semanales', component: Semanales },
-  { path: '/base/mensuales', name: 'Mensuales', component: Mensuales },
-  { path: '/base/bimestrales', name: 'Bimestrales', component: Bimestrales },
+  { path: '/notas', name: 'notas', component: Cards, exact: true },
+  { path: '/notas/test', name: 'Test', component: Test },
+  { path: '/notas/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },
+  { path: '/notas/cards', name: 'Cards', component: Cards },
+  { path: '/notas/carousels', name: 'Carousel', component: Carousels },
+  { path: '/notas/collapses', name: 'Collapse', component: Collapses },
+  { path: '/notas/forms', name: 'Forms', component: BasicForms },
+  { path: '/notas/jumbotrons', name: 'Jumbotrons', component: Jumbotrons },
+  { path: '/notas/list-groups', name: 'List Groups', component: ListGroups },
+  { path: '/notas/navbars', name: 'Navbars', component: Navbars },
+  { path: '/notas/navs', name: 'Navs', component: Navs },
+  { path: '/notas/paginations', name: 'Paginations', component: Paginations },
+  { path: '/notas/popovers', name: 'Popovers', component: Popovers },
+  { path: '/notas/progress-bar', name: 'Progress Bar', component: ProgressBar },
+  { path: '/notas/switches', name: 'Switches', component: Switches },
+  { path: '/notas/tables', name: 'Tables', component: Tables },
+  { path: '/notas/tabs', name: 'Tabs', component: Tabs },
+  { path: '/notas/tooltips', name: 'Tooltips', component: Tooltips },
+  { path: '/notas/semanales', name: 'Semanales', component: Semanales },
+  { path: '/notas/mensuales', name: 'Mensuales', component: Mensuales },
+  { path: '/notas/bimestrales', name: 'Bimestrales', component: Bimestrales },
   { path: '/buttons', name: 'Buttons', component: Buttons, exact: true },
   { path: '/buttons/buttons', name: 'Buttons', component: Buttons },
   { path: '/buttons/button-dropdowns', name: 'Dropdowns', component: ButtonDropdowns },

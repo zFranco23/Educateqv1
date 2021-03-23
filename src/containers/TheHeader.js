@@ -23,7 +23,7 @@ import {
   TheHeaderDropdownTasks
 }  from './index'
 
-const TheHeader = () => {
+const TheHeader = ({ga}) => {
   const dispatch = useDispatch()
   const sidebarShow = useSelector(state => state.sidebarShow)
 
@@ -69,7 +69,7 @@ const TheHeader = () => {
 {/*         <TheHeaderDropdownNotif/>
         <TheHeaderDropdownTasks/>
         <TheHeaderDropdownMssg/> */}
-        <TheHeaderDropdown/>
+        <TheHeaderDropdown ga={ga}/>
       </CHeaderNav>
 
       <CSubheader className="px-3 justify-content-between">

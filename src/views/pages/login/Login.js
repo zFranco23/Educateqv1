@@ -1,7 +1,6 @@
 import React,{useState} from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import user2 from '../../../img/user2.png';
-import user from '../../../img/user.jpg';
 import {
   CButton,
   CCard,
@@ -18,20 +17,28 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react'
 
-const Login = () => {
-  const identify="admin123";
-  const pass="admin123";
+const Login = (props) => {
+
+  const credentials=[
+    {user:"a", pass:"a"},
+    {user: "alex123",pass:"alex123"},
+    {user: "franco123",pass:"franco123"},
+    {user: "breiner123",pass:"breiner123"},
+    {user: "alexis123",pass:"alexis123"},
+    {user: "admin123",pass:"admin123"}
+  ]
+
 
   const [id,setId]=useState("");
   const [password,setPassword]=useState("");
   const [state,setState]=useState(false);
 
   const handleSubmit =()=>{
-    if(id===identify && password===pass){
-      alert("hola");
+    const found=credentials.find(data => data.user==id && data.pass==password);
+    if(found){
+      console.log("Encontrado");
       setState(true);
-    }else{
-      alert("Cagadon")
+      props.ga();
     }
   }
 
