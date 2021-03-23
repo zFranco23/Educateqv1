@@ -6,18 +6,19 @@ import {
   TheHeader
 } from './index'
 
-const TheLayout = ({ga}) => {
+const TheLayout = ({ga,logged}) => {
   return (
-    <div className="c-app c-default-layout">
+      <div className="c-app c-default-layout">
       <TheSidebar/>
       <div className="c-wrapper">
         <TheHeader ga={ga}/>
         <div className="c-body">
-          <TheContent/>
+          <TheContent />
         </div>
         <TheFooter/>
       </div>
     </div>
+
   )
 }
 

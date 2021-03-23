@@ -55,8 +55,8 @@ const Dashboard = () => {
         <CCardFooter>
           <CRow className="text-center">
             <CCol md sm="12" className="mb-sm-2 mb-0">
-              <div className="text-muted">Visits</div>
-              <strong>29.703 Users (40%)</strong>
+              <div className="text-muted">-----</div>
+              <strong>100 Usuarios (40%)</strong>
               <CProgress
                 className="progress-xs mt-2"
                 precision={1}
@@ -65,8 +65,8 @@ const Dashboard = () => {
               />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0 d-md-down-none">
-              <div className="text-muted">Unique</div>
-              <strong>24.093 Users (20%)</strong>
+              <div className="text-muted">-----</div>
+              <strong>100 Users (20%)</strong>
               <CProgress
                 className="progress-xs mt-2"
                 precision={1}
@@ -75,8 +75,8 @@ const Dashboard = () => {
               />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0">
-              <div className="text-muted">Pageviews</div>
-              <strong>78.706 Views (60%)</strong>
+              <div className="text-muted">-----</div>
+              <strong>100 Views (60%)</strong>
               <CProgress
                 className="progress-xs mt-2"
                 precision={1}
@@ -85,8 +85,8 @@ const Dashboard = () => {
               />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0">
-              <div className="text-muted">New Users</div>
-              <strong>22.123 Users (80%)</strong>
+              <div className="text-muted">-----</div>
+              <strong>100 Users (80%)</strong>
               <CProgress
                 className="progress-xs mt-2"
                 precision={1}
@@ -95,8 +95,8 @@ const Dashboard = () => {
               />
             </CCol>
             <CCol md sm="12" className="mb-sm-2 mb-0 d-md-down-none">
-              <div className="text-muted">Bounce Rate</div>
-              <strong>Average Rate (40.15%)</strong>
+              <div className="text-muted">-----</div>
+              <strong>100 Rate (40.15%)</strong>
               <CProgress
                 className="progress-xs mt-2"
                 precision={1}

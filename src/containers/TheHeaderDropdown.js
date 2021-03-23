@@ -46,24 +46,24 @@ const TheHeaderDropdown = ({ga}) => {
         >
           <strong>Cuenta</strong>
         </CDropdownItem>
-        <CDropdownItem>
+{/*         <CDropdownItem>
           <CIcon name="cil-bell" className="mfe-2" />
           Updates
           <CBadge color="info" className="mfs-auto">42</CBadge>
-        </CDropdownItem>
+        </CDropdownItem> */}
         <CDropdownItem>
           <CIcon name="cil-envelope-open" className="mfe-2" />
-          Messages
+          Mensajes
           <CBadge color="success" className="mfs-auto">42</CBadge>
         </CDropdownItem>
         <CDropdownItem>
           <CIcon name="cil-task" className="mfe-2" />
-          Tasks
+          Tareas
           <CBadge color="danger" className="mfs-auto">42</CBadge>
         </CDropdownItem>
         <CDropdownItem>
           <CIcon name="cil-comment-square" className="mfe-2" />
-          Comments
+          Comentarios
           <CBadge color="warning" className="mfs-auto">42</CBadge>
         </CDropdownItem>
         <CDropdownItem
