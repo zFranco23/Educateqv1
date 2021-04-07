@@ -1,5 +1,9 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { makeStyles } from '@material-ui/core/styles';
+import {Box, Container} from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
+import user from '../img/alex.jpg';
 import {
   CCreateElement,
   CSidebar,
@@ -10,14 +14,32 @@ import {
   CSidebarMinimizer,
   CSidebarNavDropdown,
   CSidebarNavItem,
-} from '@coreui/react'
+} from '@coreui/react';
 
-import CIcon from '@coreui/icons-react'
+import CIcon from '@coreui/icons-react';
 
 // sidebar nav config
-import navigation from './_nav'
+import navigation from './_nav';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  small: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+  },
+  large: {
+    width: theme.spacing(10),
+    height: theme.spacing(10),
+  }
+}));
 
 const TheSidebar = () => {
+  const classes = useStyles();
   const dispatch = useDispatch()
   const show = useSelector(state => state.sidebarShow)
 
@@ -29,15 +51,17 @@ const TheSidebar = () => {
     >
       <CSidebarBrand className="d-md-down-none" to="/dashboard">
         <p className="c-sidebar-brand-full">Sistema de Apoyo Estudiantil</p>
-        <div>
-          
-        </div>
+        
+        
         <CIcon
           className="c-sidebar-brand-minimized"
           name="sygnet"
           height={35}/>  
         
       </CSidebarBrand>
+      <Container style={{padding:'30px'}}>
+        <Avatar style={{marginLeft:'60px'}} alt="Remy Sharp" src={user} className={classes.large} />
+        </Container>
       <CSidebarNav>
 
         <CCreateElement

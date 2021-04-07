@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import user2 from '../../../img/user2.png';
+import Image from "../../../img/niñoslogin.jpg"
 import {
   CButton,
   CCard,
@@ -43,7 +44,7 @@ const Login = (props) => {
   }
 
   return (
-    <div className="c-app c-default-layout flex-row align-items-center">
+    <div className="c-app c-default-layout flex-row align-items-center" style={{backgroundImage:'url('+Image+')'}}>
       { state && (
         <Redirect to="/dashboard"/> 
       ) }

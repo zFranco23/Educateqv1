@@ -11,7 +11,7 @@ const _nav =  [
   /* Nueva sección */
   {
     _tag: 'CSidebarNavTitle',
-    _children: ['Alumnos']
+    _children: ['Alumnos']  
   },
   {
     _tag: 'CSidebarNavItem',
@@ -55,13 +55,19 @@ const _nav =  [
     _tag: 'CSidebarNavItem',
     name: 'Cursos',
     to: '/alumno/cursos',
-    icon: 'cil-calendar',
+    icon: 'cil-book',
   },
   {
     _tag: 'CSidebarNavItem',
     name: 'Observaciones',
     to: '/alumno/observaciones',
     icon: 'cil-pencil',
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Horario',
+    to: '/alumno/horario',
+    icon: 'cil-calendar',
   }/* ,
   {
     _tag: 'CSidebarNavItem',

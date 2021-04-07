@@ -42,6 +42,7 @@ const Notas= React.lazy(()=> import('./views/alumno/notas/Notas'));
 const Asistencia=React.lazy(()=> import('./views/alumno/asistencia/Asistencia'));
 const Cursos= React.lazy(()=> import('./views/alumno/cursos/Cursos'));
 const Observaciones= React.lazy(()=> import('./views/alumno/observaciones/Observaciones'));
+const Horario= React.lazy(()=> import('./views/alumno/horario/Horario'));
 const Colors = React.lazy(() => import('./views/alumno/colors/Colors'));
 const Typography = React.lazy(() => import('./views/alumno/typography/Typography'));
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'));
@@ -57,6 +58,7 @@ const routes = [
   { path: '/alumno/asistencia', name: 'Asistencia', component: Asistencia },
   { path: '/alumno/cursos', name: 'Cursos', component: Cursos },
   { path: '/alumno/observaciones', name: 'Observaciones', component: Observaciones },
+  { path: '/alumno/horario', name:'Horario', component: Horario},
   { path: '/alumno/colors', name: 'Colors', component: Colors },
   { path: '/alumno/typography', name: 'Typography', component: Typography },
   { path: '/notas', name: 'notas', component: Cards, exact: true },

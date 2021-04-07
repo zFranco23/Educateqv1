@@ -1,7 +1,56 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import MaterialTable from 'material-table';
+import {Modal, TextField,Button} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
+import {
+    CButton,
+    CCard,
+    CCardBody,
+    CCardGroup,
+    CCol,
+    CContainer,
+    CForm,
+    CInput,
+    CInputGroup,
+    CInputGroupPrepend,
+    CInputGroupText,
+    CRow
+  } from '@coreui/react';
+
+  const useStyles = makeStyles((theme) => ({
+    modal: {
+      position: 'absolute',
+      width: 400,
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)'
+    },
+    iconos:{
+      cursor: 'pointer'
+    }, 
+    inputMaterial:{
+      width: '100%'
+    }
+  }));
 
 function Alumno() {
+
+    const styles = useStyles();
+    const [modalInsertar,setModalInsertar]=useState(false);
+
+    const abrirCerrarModalInsertar=()=>{  
+        setModalInsertar(!modalInsertar);
+      }
+    
+    const [modalEditar,setModalEditar]=useState(false);
+
+    const abrirCerrarModalEditar=()=>{  
+        setModalEditar(!modalEditar);
+      }
 
 const columns=[
     {
@@ -43,17 +92,55 @@ const data = [
     {orden:6, apellido:' Flores Pucho',nombre: 'Juan Carlos', edad:21, cumpleanos:'15/06/1999',telefono:980622918}
 ]
 
+const bodyInsertar=(
+    <div className={styles.modal}>
+        <h3>Agregar Nuevo Alumno</h3>
+        <TextField className={styles.inputMaterial} label="Apellidos"/><br/>
+        <TextField className={styles.inputMaterial} label="Nombres"/><br/><br/>
+        <TextField className={styles.inputMaterial} type="date"/><br/>
+        <TextField className={styles.inputMaterial} type="number" label="Teléfono"/><br/>
+        <br/><br/>
+        <div align="right"> 
+            <CButton color="info" style={{marginRight:'5px'}}>Insertar</CButton>
+            <CButton color="danger" onclick={()=>abrirCerrarModalInsertar()}>Cancelar</CButton>
+        </div>
+    </div>
+
+)
+
+const bodyEditar=(
+    <div className={styles.modal}>
+        <h3>Editar Alumno</h3>
+        <TextField className={styles.inputMaterial} label="Apellidos"/><br/>
+        <TextField className={styles.inputMaterial} label="Nombres"/><br/><br/>
+        <TextField className={styles.inputMaterial} type="date"/><br/>
+        <TextField className={styles.inputMaterial} type="number" label="Teléfono"/><br/>
+        <br/><br/>
+        <div align="right"> 
+            <CButton color="info" style={{marginRight:'5px'}}>Insertar</CButton>
+            <CButton color="danger" onclick={()=>abrirCerrarModalEditar()}>Cancelar</CButton>
+        </div>
+    </div>
+
+)
+
+
+
     return (
         <div style={{ maxWidth: "100%" }}>
+    
+            <CButton color="success" style={{ float:'right', marginBottom:'20px'}} onClick={()=>abrirCerrarModalInsertar()}>Insertar Alumno</CButton>
+            <br/><br/>
             <MaterialTable
                 columns={columns}
                 data={data}
                 title="Sección A"
                 actions={[
                     {
-                        icon:'edit',
+                        icon:'edit',                
                         tooltip: 'Editar Alumno',
-                        onClick:(event,rowData)=>alert('Has elegido editar al alumno:'+rowData.nombre)
+                        //onClick:(event,rowData)=>alert('Has elegido editar al alumno:'+rowData.nombre)
+                        onClick:()=>abrirCerrarModalEditar()
                     },
                     {
                         icon:'delete',
@@ -71,6 +158,17 @@ const data = [
                     }
                 }}
             />
+
+            <Modal
+                open={modalInsertar}
+                onClose={abrirCerrarModalInsertar}>
+                    {bodyInsertar}
+            </Modal>
+            <Modal
+                open={modalEditar}
+                onClose={abrirCerrarModalEditar}>
+                    {bodyEditar}
+            </Modal>
         </div>
     )
 }
