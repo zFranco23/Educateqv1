@@ -67,6 +67,33 @@ import {
     }    
   ];
 
+  const Dias = [
+    {
+      value: 'Lunes',
+      label: 'Lunes'
+    },
+    {
+      value: 'Martes',
+      label: 'Martes'
+    },
+    {
+      value: 'Miercoles',
+      label: 'Miercoles'
+    },
+    {
+      value: 'Jueves',
+      label: 'Jueves'
+    },
+    {
+      value: 'Viernes',
+      label: 'Viernes'
+    },
+    {
+      value: 'Sábado',
+      label: 'Sábado'
+    }
+  ]
+
   const useStyles = makeStyles((theme) => ({
     modal: {
       position: 'absolute',
@@ -98,6 +125,7 @@ function Asistencia() {
     const styles = useStyles();
     const [modalInsertar,setModalInsertar]=useState(false);
     const [semana, setSemana] = React.useState('Semana 1');
+    const [dia, setDia] = React.useState('Lunes');
     const [asistencia, setAsistencia] = React.useState('Asistió');
 
     const abrirCerrarModalInsertar=()=>{  
@@ -110,6 +138,10 @@ function Asistencia() {
     
     const handleSemana = (event) => {
         setSemana(event.target.value);
+    }
+
+    const handleDia = (event) => {
+      setDia(event.target.value);
     }
 
     const columns=[
@@ -178,6 +210,7 @@ function Asistencia() {
             <TextField
                 id="outlined-select-currency-native"
                 select
+                style={{paddingRight:'8px'}}
                 label="Bimestre"
                 value={semana}
                 onChange={handleSemana}
@@ -188,6 +221,24 @@ function Asistencia() {
                 variant="outlined"
             >
                 {Semanas.map((option) => (
+                <option key={option.value} value={option.value}>
+                {option.label}
+                </option>
+                ))}
+            </TextField>
+            <TextField
+                id="outlined-select-currency-native"
+                select
+                label="Día de la Semana"
+                value={dia}
+                onChange={handleDia}
+                SelectProps={{
+                    native: true,
+                }}
+                helperText="Seleccione un Dia"
+                variant="outlined"
+            >
+                {Dias.map((option) => (
                 <option key={option.value} value={option.value}>
                 {option.label}
                 </option>
