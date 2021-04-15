@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Observaciones() {
 
-    const classes = useStyles();
+  const classes = useStyles();
   const [value, setValue] = React.useState('Controlled');
   const [curso, setCurso] = React.useState('Matemática 1');
 

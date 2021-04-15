@@ -165,12 +165,14 @@ function Asistencia() {
             <br/><br/>
             <div align="right"> 
                 <CButton color="info" style={{marginRight:'5px'}}>Aceptar</CButton>
-                <CButton color="danger" onclick={()=>abrirCerrarModalInsertar()}>Cancelar</CButton>
+                <CButton color="danger" onClick={()=>abrirCerrarModalInsertar()}>Cancelar</CButton>
             </div>
         </div>
     
     )
 
+
+    
     return (
         <div style={{ maxWidth: "100%" }}>
             <TextField
