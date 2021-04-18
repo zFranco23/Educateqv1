@@ -53,10 +53,9 @@ const Login = (props) => {
       alert("Usuario incorrecto")
       console.log(error);
     }
-    
-
   }
 
+  
   return (
     <div className="c-app c-default-layout flex-row align-items-center" style={{backgroundImage:'url('+Image+')'}}>
       { state && (

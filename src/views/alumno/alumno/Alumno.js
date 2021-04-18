@@ -6,6 +6,7 @@ import {
     CButton,
   } from '@coreui/react';
 import BackContext from 'src/Provider/BackContext';
+import axios from 'axios';
 
   const useStyles = makeStyles((theme) => ({
     modal: {
@@ -29,6 +30,7 @@ import BackContext from 'src/Provider/BackContext';
 
 function Alumno() {
     const url="https://api-colegio-g12.herokuapp.com/escuela/buscar-alumnos-del-tutor";
+    const url_insert="https://api-colegio-g12.herokuapp.com/escuela/registrar-alumno";
 
     const {userId}=useContext(BackContext);
     const styles = useStyles();
@@ -52,43 +54,62 @@ function Alumno() {
     const [phoneEdit,setPhoneEdit]=useState("");
 
 
-    const insertarAlumno=()=>{
-        setdataAlumno([...dataAlumno,{
-            orden:dataAlumno.length+1,
-            apellido:lastName,
-            nombre:name,
-            edad:getAge(getBirthday(birthday)),
-            cumpleanos:getBirthday(birthday),
-            telefono:phone
-        }])
-        setModalInsertar(false);
+    const insertarAlumno=async ()=>{
+        try {
+            const {data}=await axios({
+                method: "POST",
+                url: url_insert,
+                data : {
+                  nombre:name,
+                  apellido:lastName,
+                  edad:getAge(getBirthday(birthday)),
+                  nacimiento:new Date(birthday),
+                  telefono:phone,
+                  user:userId
+                }
+              })
+              if(data.ok){
+                alert("Alumno Insertado")
+                setModalInsertar(false);
+                getData();
+              }
+            
+        } catch (error) {
+            alert("No se insertó");
+        }
+        
     }
     const eliminarAlumno = (value) =>{
         if(window.confirm(`Desea eliminar a : ${value.nombre} ${value.apellido}`)){
-            const newData=dataAlumno.filter(alumno => alumno.orden!=value.orden);
-            setdataAlumno(newData);
+            deleteStudent(buscarId(value.orden));
+            getData();           
         }
+    }
+    const buscarId=(orden)=>{
+        const student=dataAlumno.find(el => el.orden==orden);
+        return student.id;
+    }
+    const deleteStudent= async (id)=>{
+        const del=await axios.delete("https://api-colegio-g12.herokuapp.com/escuela/eliminar-alumno",
+        {
+            data :{
+                idAlumno:id
+            }
+        }
+        )
     }
 
     /* FOR EDIT */
-    const actualizarAlumno = (idEdit) =>{
-        console.log(idEdit);
-        const newData=dataAlumno.map((alumno,index)=>{
-            if(alumno.orden==idEdit){
-                return (
-                    {
-                        orden:alumno.orden,
-                        apellido:lastNameEdit,
-                        nombre:nameEdit,
-                        edad:getAge(getBirthday(birthdayOriginalEdit)),
-                        cumpleanos:getBirthday(birthdayOriginalEdit),
-                        telefono:phoneEdit
-                    }
-                )
-            }
-            return alumno;
+    const actualizarAlumno = async (idEdit) =>{
+        const put = await axios.put('https://api-colegio-g12.herokuapp.com/escuela/actualizar-alumno', {
+                idAlumno:buscarId(idEdit),
+                nombre:nameEdit,
+                apellido:lastNameEdit,
+                nacimiento:new Date(birthdayOriginalEdit),
+                telefono:phoneEdit,    
+
         })
-        setdataAlumno(newData);
+        getData();
         cerrarModalEditar();
     }
 
@@ -99,7 +120,9 @@ function Alumno() {
         setLastNameEdit(data.apellido);
         setBirthdayEdit(data.cumpleanos);
         setBirthdayOriginalEdit(reverse(data.cumpleanos));
-        setPhoneEdit(data.telefono)
+        setPhoneEdit(data.telefono);
+
+
     }
     /** */
 
@@ -171,7 +194,8 @@ function Alumno() {
                 nombre:alumno.nombre,
                 edad:getAge(getBirthday(alumno.nacimiento)),
                 cumpleanos:getBirthday(alumno.nacimiento),
-                telefono:alumno.telefono
+                telefono:alumno.telefono,
+                id:alumno._id
             }
         ))
         setdataAlumno(newData);
@@ -179,7 +203,7 @@ function Alumno() {
 
     useEffect(()=>{
         getData();
-    },[])
+    },[dataAlumno])
 
 const columns=[
     {
@@ -242,7 +266,7 @@ const bodyEditar=(
         <h3>Editar Alumno</h3>
         <TextField className={styles.inputMaterial} defaultValue={lastNameEdit} label="Apellidos" onChange={e=>setLastNameEdit(e.target.value)}/><br/>
         <TextField className={styles.inputMaterial} defaultValue={nameEdit} label="Nombres" onChange={e=>setNameEdit(e.target.value)}/><br/><br/>
-        <TextField className={styles.inputMaterial} defaultValue={birthdayOriginalEdit} type="date" onClick={e=>setBirthdayOriginalEdit(e.target.value)}/><br/>
+        <TextField className={styles.inputMaterial} defaultValue={birthdayOriginalEdit} type="date" onClick={e=>setBirthdayOriginalEdit(e.target.value)} onChange={e=>setBirthdayOriginalEdit(e.target.value)}/><br/>
         <TextField className={styles.inputMaterial} defaultValue={phoneEdit} type="number" label="Teléfono" onChange={e=>setPhoneEdit(e.target.value)}/><br/>
         <br/><br/>
         <div align="right"> 

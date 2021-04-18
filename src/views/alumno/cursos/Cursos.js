@@ -6,7 +6,7 @@ import {
     CButton
   } from '@coreui/react';
 import BackContext from 'src/Provider/BackContext';
-
+import axios from 'axios';
 
   const useStyles = makeStyles((theme) => ({
     modal: {
@@ -39,9 +39,29 @@ function Cursos() {
     const [modalInsertar,setModalInsertar]=useState(false);
     const [modalEditar,setModalEditar]=useState(false);
 
-    /**FOR INSERT */
-    const [name,setName]=useState("");
-    const [area,serArea]=useState("");
+
+
+
+
+    const eliminarCurso = (value) =>{
+        if(window.confirm(`Desea eliminar a : ${value.curso}`)){
+            deleteCourse(buscarId(value.orden));
+            getData();           
+        }
+    }
+    const buscarId=(orden)=>{
+        const course=dataCurso.find(el => el.orden==orden);
+        return course.id;
+    }
+    const deleteCourse= async (id)=>{
+        const del=await axios.delete("https://api-colegio-g12.herokuapp.com/escuela/eliminar-curso",
+        {
+            data :{
+                idCurso:id
+            }
+        }
+        )
+    }
 
     const abrirCerrarModalInsertar=()=>{  
         setModalInsertar(!modalInsertar);
@@ -62,9 +82,8 @@ function Cursos() {
                 orden:index+1,
                 curso:curso.nombre,
                 area:curso.area,
-                horas:curso.cantidadHoras
-
-
+                horas:curso.cantidadHoras,
+                id:curso._id
             }
         ))
         setdataCurso(newData);
@@ -73,7 +92,7 @@ function Cursos() {
 
     useEffect(()=>{
         getData();
-    },[])
+    },[dataCurso])
 
     const columns=[
         {
@@ -137,7 +156,7 @@ function Cursos() {
         <div style={{ maxWidth: "100%" }}>
             <CButton color="success" style={{ float:'right', marginBottom:'20px'}} onClick={()=>abrirCerrarModalInsertar()}>Agregar Curso</CButton>
             <br/><br/>
-            {dataCurso.length>0 ? (<MaterialTable
+            {dataCurso.length>=0 ? (<MaterialTable
                 columns={columns}
                 data={dataCurso}
                 title="Sección A"
@@ -151,7 +170,7 @@ function Cursos() {
                     {
                         icon:'delete',
                         tooltip: 'Eliminar Curso',
-                        onClick:(event,rowData)=>window.confirm('¿Estás seguro de eliminar al curso: '+rowData.curso+'?')
+                        onClick:(event,rowData)=>eliminarCurso(rowData)
                     }
 
                 ]}
