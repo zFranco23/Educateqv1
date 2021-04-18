@@ -1,10 +1,11 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect, useContext} from 'react';
 import MaterialTable from 'material-table';
 import {Modal, TextField,Button, Input, CircularProgress} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {
     CButton,
   } from '@coreui/react';
+import BackContext from 'src/Provider/BackContext';
 
   const useStyles = makeStyles((theme) => ({
     modal: {
@@ -27,6 +28,9 @@ import {
   }));
 
 function Alumno() {
+    const url="https://api-colegio-g12.herokuapp.com/escuela/buscar-alumnos-del-tutor";
+
+    const {userId}=useContext(BackContext);
     const styles = useStyles();
 
     const [dataAlumno,setdataAlumno]=useState([]);
@@ -158,7 +162,7 @@ function Alumno() {
     }
 
     async function getData(){
-        const response=await fetch("https://api-colegio-g12.herokuapp.com/escuela/buscar-alumnos-del-tutor/607349c1a3ee950015a7faa7");
+        const response=await fetch(`${url}/${userId}`);
         const {alumnos}=await response.json();
         const newData=alumnos.map((alumno,index)=>(
             {

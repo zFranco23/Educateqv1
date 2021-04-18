@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext, useEffect,useState } from 'react';
 import MaterialTable from 'material-table';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { CButton } from '@coreui/react';
+import BackContext from '../../../Provider/BackContext';
 
 const Cursos = [
     {
@@ -45,10 +46,15 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 function Observaciones() {
+  const url="https://api-colegio-g12.herokuapp.com/escuela/buscar-alumnos-del-tutor";
+  const {userId}=useContext(BackContext);
 
   const classes = useStyles();
-  const [value, setValue] = React.useState('Controlled');
-  const [curso, setCurso] = React.useState('Matemática 1');
+
+  const [value, setValue] = useState('Controlled');
+  const [dataAlumno,setdataAlumno]=useState([]);
+  const [curso, setCurso] = useState('Matemática 1');
+
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -56,7 +62,8 @@ function Observaciones() {
 
   const handleCurso = (event) => {
     setCurso(event.target.value);
-}
+  }
+
 
     const columns=[
         {
@@ -73,6 +80,23 @@ function Observaciones() {
             field:'nombre'
         }
     ]
+
+    async function getData(){
+      const response=await fetch(`${url}/${userId}`);
+      const {alumnos}=await response.json();
+      const newData=alumnos.map((alumno,index)=>(
+          {
+              orden:index+1,
+              apellido:alumno.apellido,
+              nombre:alumno.nombre,
+          }
+      ))
+      setdataAlumno(newData);
+    }
+
+    useEffect(()=>{
+      getData();
+    },[])
 
     const data = [
     
@@ -106,7 +130,7 @@ function Observaciones() {
             </TextField><br/><br/>
             <MaterialTable
                 columns={columns}
-                data={data}
+                data={dataAlumno}
                 style={{float:'left'}}
                 title="Sección A"
                 actions={[

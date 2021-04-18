@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useContext, useState} from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import user2 from '../../../img/user2.png';
 import Image from "../../../img/niñoslogin.jpg"
@@ -18,29 +18,43 @@ import {
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react'
 
+import BackContext from '../../../Provider/BackContext';
+import axios from 'axios';
+
+
+
 const Login = (props) => {
+  const url="https://api-colegio-g12.herokuapp.com/escuela/login";
 
-  const credentials=[
-    {user:"a", pass:"a"},
-    {user: "alex123",pass:"alex123"},
-    {user: "franco123",pass:"franco123"},
-    {user: "breiner123",pass:"breiner123"},
-    {user: "alexis123",pass:"alexis123"},
-    {user: "admin123",pass:"admin123"}
-  ]
-
-
+  const {setUserId}=useContext(BackContext);
   const [id,setId]=useState("");
   const [password,setPassword]=useState("");
   const [state,setState]=useState(false);
 
-  const handleSubmit =()=>{
-    const found=credentials.find(data => data.user==id && data.pass==password);
-    if(found){
-      console.log("Encontrado");
-      setState(true);
-      props.ga();
+  
+  const handleSubmit = async ()=>{
+    try {
+      const {data}=await axios({
+        method: "POST",
+        url: url,
+        data : {
+          nick:id,
+          password:password
+        }
+      })
+      const {userLogueado: {_id},ok}=data;
+      
+      if(ok){
+        setState(true);
+        props.ga();
+        setUserId(_id)
+      }
+    } catch (error) {
+      alert("Usuario incorrecto")
+      console.log(error);
     }
+    
+
   }
 
   return (

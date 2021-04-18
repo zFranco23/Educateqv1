@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -118,6 +118,7 @@ import Paper from '@material-ui/core/Paper';
  */
 
 
+import BackContext from '../../../Provider/BackContext';
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -158,22 +159,26 @@ const useStyles = makeStyles({
 });
 
 function Horario(){
+    const {userId}=useContext(BackContext);
+    const baseUrl="https://api-colegio-g12.herokuapp.com/escuela/buscar-alumnos-del-tutor";
     /* nombre,dia,cant_horas,hora_ini */
     const [data,setData]=useState([]);
     let rows=Array();
 
     async function getData(){
-      const res= await fetch("https://api-colegio-g12.herokuapp.com/escuela/buscar-tutor/6076155acd901b001503a331");
-      //const res= await fetch("https://api-colegio-g12.herokuapp.com/escuela/buscar-tutor/607625b1cd901b001503a346");
-      const {user} = await res.json();
-      const {cursos} = user;
+      //1er
+      //const res= await fetch("https://api-colegio-g12.herokuapp.com/escuela/buscar-alumnos-del-tutor/60763ac3669da3001500e3a4");
+      //2do
+      const res=await fetch(`${baseUrl}/${userId}`);
+      const {tutor} = await res.json();
+      const {cursos} = tutor;
 
       const newData=cursos.map((curso,index)=>(
         {
           nombre:curso.nombre,
           dia:curso.dia,
-          cant_horas:curso.horas,
-          hora_ini:curso.hora_ini
+          cant_horas:curso.cantidadHoras,
+          hora_ini:curso.horaIni
         }
       ))
       setData(newData);
