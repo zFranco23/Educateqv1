@@ -1,21 +1,12 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect, useContext} from 'react';
 import MaterialTable from 'material-table';
-import {Modal, TextField,Button} from '@material-ui/core';
+import {Modal, TextField,Button, CircularProgress} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {
-    CButton,
-    CCard,
-    CCardBody,
-    CCardGroup,
-    CCol,
-    CContainer,
-    CForm,
-    CInput,
-    CInputGroup,
-    CInputGroupPrepend,
-    CInputGroupText,
-    CRow
+    CButton
   } from '@coreui/react';
+import BackContext from 'src/Provider/BackContext';
+
 
   const useStyles = makeStyles((theme) => ({
     modal: {
@@ -39,20 +30,50 @@ import {
 
 function Cursos() {
 
+    const url="https://api-colegio-g12.herokuapp.com/escuela/buscar-alumnos-del-tutor";
+
+    const {userId} = useContext(BackContext);
     const styles = useStyles();
+
+    const [dataCurso,setdataCurso] = useState([]);
     const [modalInsertar,setModalInsertar]=useState(false);
+    const [modalEditar,setModalEditar]=useState(false);
+
+    /**FOR INSERT */
+    const [name,setName]=useState("");
+    const [area,serArea]=useState("");
 
     const abrirCerrarModalInsertar=()=>{  
         setModalInsertar(!modalInsertar);
       }
     
-    const [modalEditar,setModalEditar]=useState(false);
 
     const abrirCerrarModalEditar=()=>{  
       setModalEditar(!modalEditar);
     }
 
-    
+    async function getData(){
+        const response=await fetch(`${url}/${userId}`);
+        const {tutor} = await response.json();
+        const {cursos} = tutor;
+        
+        const newData=cursos.map((curso,index)=>(
+            {
+                orden:index+1,
+                curso:curso.nombre,
+                area:curso.area,
+                horas:curso.cantidadHoras
+
+
+            }
+        ))
+        setdataCurso(newData);
+        
+    }
+
+    useEffect(()=>{
+        getData();
+    },[])
 
     const columns=[
         {
@@ -73,7 +94,7 @@ function Cursos() {
             field:'horas'
         }
     ];
-
+    /*
     const data = [
     
         {orden:1, curso:'Matematica Básica I', area:'Ciencias', horas:'2'},
@@ -82,6 +103,7 @@ function Cursos() {
         {orden:4, curso:'Razonamiento Verbal', area:'Letras', horas:'2'},
         {orden:5, curso:'Algebra', area:'Ciencias', horas:'2'}
     ]
+    */
 
     const bodyInsertar=(
         <div className={styles.modal}>
@@ -115,9 +137,9 @@ function Cursos() {
         <div style={{ maxWidth: "100%" }}>
             <CButton color="success" style={{ float:'right', marginBottom:'20px'}} onClick={()=>abrirCerrarModalInsertar()}>Agregar Curso</CButton>
             <br/><br/>
-            <MaterialTable
+            {dataCurso.length>0 ? (<MaterialTable
                 columns={columns}
-                data={data}
+                data={dataCurso}
                 title="Sección A"
                 actions={[
                     {
@@ -141,7 +163,7 @@ function Cursos() {
                         actions:'Acciones'
                     }
                 }}
-            />
+            />) : <CircularProgress size="50"/>}
             <Modal
                 open={modalInsertar}
                 onClose={abrirCerrarModalInsertar}>
