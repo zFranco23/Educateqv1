@@ -24,21 +24,24 @@ function Observaciones() {
 
   const urlObservaciones="https://api-colegio-g12.herokuapp.com/escuela/guardar-observacion";
 
+  const urlTraerObservaciones="https://api-colegio-g12.herokuapp.com/escuela/observacion-alumno";
+
   const {userId}=useContext(BackContext);
 
   /* const url_insert=`${urlObservaciones}`; */
 
   const classes = useStyles();
 
-  const [value, setValue] = useState('Controlled');
   const [dataAlumno,setdataAlumno]=useState([]);
   const [curso, setCurso] = useState("");
   const [cursos,setCursos]=useState([]);
-  const [observaciones,setObservaciones]=useState()
+  const [observaciones,setObservaciones]=useState([])
   const [observacion,setObservacion]=useState("");
-  const [alumnoInsertar,setAlumnoInsertar]=useState(null);
+  const [alumnoInsertar,setAlumnoInsertar]=useState({});
   const [dataInsertar,setDataInsertar]=useState("");
   const [cursoInsertar,setCursoInsertar]=useState("")
+  const [idObservacion,setIdObservacion]=useState("");
+  const [hasObservation,setHasObservation]=useState(false);
 
 
   const handleObservacion = (event) => {
@@ -49,27 +52,36 @@ function Observaciones() {
     setCurso(event.target.value);
     const {id}= cursos.find(el => el.label ==event.target.value);
     setCursoInsertar(id);
-  }
-
-  const setearAlumno = (data) =>{
-    setAlumnoInsertar({nombre:data.nombre,apellido:data.apellido});
-    const {id}= cursos.find(el => el.label ==curso);
-  
-    const student=dataAlumno.find(al => al.orden==data.orden);
-    
-    
-
-    setDataInsertar(student.id);
-    setCursoInsertar(id);
     traerObservaciones(id);
   }
 
+  const setearAlumno = (data) =>{
+    traerObservaciones(cursoInsertar);
+    setAlumnoInsertar({nombre:data.nombre,apellido:data.apellido});
+    const student=dataAlumno.find(al => al.orden==data.orden);
+    setDataInsertar(student.id);
+
+    const obsAlumno= observaciones.find(el => el.alumno == student.id);
+    if(obsAlumno){
+      setHasObservation(true);
+      setObservacion(obsAlumno.descripcion)
+      setIdObservacion(obsAlumno._id);
+    }else{
+      setHasObservation(false);
+      setObservacion("");
+      setIdObservacion("");
+    }
+    
+  }
+
+
   const traerObservaciones = async (id) =>{
 
-    const response= await axios.get("https://api-colegio-g12.herokuapp.com/escuela/observacion-alumno/607b3ffe7dbc3f0015d6fce8/${}"
-    )
+    const response=await fetch(`${urlTraerObservaciones}/${userId}/${id}`);
+    const {observacion}=await response.json();
 
-    console.log(response.data);
+    setObservaciones(observacion);
+
   }
 
   const resetearAlumno = () =>{
@@ -82,25 +94,40 @@ function Observaciones() {
     setAlumnoInsertar({});
   }
   const postData= async () => {
-    try {
-      const {data}=await axios({
-          method: "POST",
-          url: urlObservaciones,
-          data : {
-            descripcion:observacion,
-            alumno:dataInsertar,
-            curso:cursoInsertar,
-            IdUser:userId
-          }
-        })
-        if(data.ok){
-          cleanData();
-          console.log("aaa");
-        }
+
+    if(!hasObservation){
+        try {
+          const {data}=await axios({
+              method: "POST",
+              url: urlObservaciones,
+              data : {
+                descripcion:observacion,
+                alumno:dataInsertar,
+                curso:cursoInsertar,
+                IdUser:userId
+              }
+            })
+            if(data.ok){
+              cleanData();
+              console.log("aaa");
+            }
+          
+      } catch (error) {
+          alert("No se insertó");
+      }
+    }else{
+      try{
+        const put = await axios.put('https://api-colegio-g12.herokuapp.com/escuela/actualizar-observacion', {
+                observacionId:idObservacion,
+                descripcion:observacion 
+        });
       
-  } catch (error) {
-      alert("No se insertó");
-  }
+        console.log(put);
+      }catch(error){
+        alert("No se pudo actualizar al alumno");
+      }
+    }
+    
 }
 
 /*   const actualizarObservacion = async () =>{
@@ -142,12 +169,26 @@ function Observaciones() {
           }
       ))
       setdataAlumno(newData);
-      const newCourses=cursos.map((course,i)=>({
+
+      const arrayVacio=new Array();
+        const a=new Array();
+
+        for(let i=0;i<cursos.length;i++){
+            if(!arrayVacio.includes(cursos[i].nombre)){
+                a.push(cursos[i]);
+            }
+            arrayVacio.push(cursos[i].nombre);
+        }
+      
+      //courses = a 
+      const newCourses=a.map((course,i)=>({
         value: course.nombre,
         label: course.nombre,
         id: course._id
       }))
       setCursos(newCourses);
+
+      
     }
 
     useEffect(()=>{

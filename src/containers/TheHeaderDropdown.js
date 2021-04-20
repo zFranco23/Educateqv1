@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   CBadge,
   CDropdown,
@@ -8,14 +8,15 @@ import {
   CImg
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import BackContext from 'src/Provider/BackContext'
+import { Typography } from '@material-ui/core'
+
 
 const TheHeaderDropdown = ({ga}) => {
 
+  const {userName}=useContext(BackContext);
 
-  function result(){
-    console.log("adasd");
-    console.log(ga);
-  }
+
 
   return (
     <CDropdown
@@ -24,7 +25,7 @@ const TheHeaderDropdown = ({ga}) => {
       direction="down"
     >
       <div style={{display:"flex" , alignItems:"center"}}>
-        <p style={{marginTop:"1rem",color:"#333333"}}>!Hola de Nuevo , <span>Alexander</span> !</p>
+        <Typography variant="h6"> ¡ Hola de Nuevo , {userName} !</Typography>
         <CDropdownToggle className="c-header-nav-link" caret={false}>
           
           <div className="c-avatar">

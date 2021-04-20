@@ -91,7 +91,16 @@ function Mensuales() {
         //Cursos
         const response=await fetch(`${urlCursos}/${userId}`);
         const {alumnos,tutor:{cursos}}=await response.json();
-        changeData(cursos);
+        const arrayVacio=new Array();
+        const a=new Array();
+
+        for(let i=0;i<cursos.length;i++){
+            if(!arrayVacio.includes(cursos[i].nombre)){
+                a.push(cursos[i]);
+            }
+            arrayVacio.push(cursos[i].nombre);
+        }
+        changeData(a);
         changeDataAlumnos(alumnos);
     }
 
@@ -159,7 +168,7 @@ function Mensuales() {
               {
                 data: [desaprobados.length,aprobados.length,neutral.length],
                 backgroundColor: [
-                  '#FF6384',
+                  '#FC0404',
                   '#36A2EB',
                   '#FFCE56',
                 ],
@@ -183,6 +192,7 @@ function Mensuales() {
             </Grid>
             </Grid>
     }
+    
     const displayDesaprobados=(
         <div style={{margin:"1rem"}}>
             <CAlert color="danger">

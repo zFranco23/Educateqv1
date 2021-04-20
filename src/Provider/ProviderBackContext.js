@@ -7,9 +7,10 @@ import BackContext from './BackContext.js';
 function ProviderBackContext({children}) {
 
     const [userId,setUserId]=useState("");
+    const [userName,setUserName]=useState("");
 
     return (
-        <BackContext.Provider value={{userId,setUserId}}>
+        <BackContext.Provider value={{userId,userName,setUserId,setUserName}}>
             {children}
         </BackContext.Provider>
     )

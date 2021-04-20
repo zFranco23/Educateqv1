@@ -26,7 +26,7 @@ import axios from 'axios';
 const Login = (props) => {
   const url="https://api-colegio-g12.herokuapp.com/escuela/login";
 
-  const {setUserId}=useContext(BackContext);
+  const {setUserId,setUserName}=useContext(BackContext);
   const [id,setId]=useState("");
   const [password,setPassword]=useState("");
   const [state,setState]=useState(false);
@@ -42,12 +42,13 @@ const Login = (props) => {
           password:password
         }
       })
-      const {userLogueado: {_id},ok}=data;
+      const {userLogueado: {_id,nombre},ok}=data;
       
       if(ok){
         setState(true);
         props.ga();
         setUserId(_id)
+        setUserName(nombre)
       }
     } catch (error) {
       alert("Usuario incorrecto")

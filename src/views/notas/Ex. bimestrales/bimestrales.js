@@ -76,6 +76,8 @@ function Bimestrales() {
             id: course._id
         }))
         setCursos(newCourses);
+
+
     }
     const changeDataAlumnos = (students) => {
         const newStudents=students.map((student,i)=>({
@@ -91,7 +93,18 @@ function Bimestrales() {
         //Cursos
         const response=await fetch(`${urlCursos}/${userId}`);
         const {alumnos,tutor:{cursos}}=await response.json();
-        changeData(cursos);
+
+        const arrayVacio=new Array();
+        const a=new Array();
+
+        for(let i=0;i<cursos.length;i++){
+            if(!arrayVacio.includes(cursos[i].nombre)){
+                a.push(cursos[i]);
+            }
+            arrayVacio.push(cursos[i].nombre);
+        }
+        
+        changeData(a);
         changeDataAlumnos(alumnos);
     }
 
@@ -150,15 +163,15 @@ function Bimestrales() {
         }
         const pie = {
             labels: [
-              'Neutral',
               'Desaprobados',
               'Aprobados',
+              'Neutral',
             ],
             datasets: [
               {
                 data: [neutral.length,aprobados.length,desaprobados.length],
                 backgroundColor: [
-                  '#FF6384',
+                  '#FC0404',
                   '#36A2EB',
                   '#FFCE56',
                 ],
@@ -187,8 +200,8 @@ function Bimestrales() {
             <CAlert color="danger">
             <span style={{fontWeight:"bold"}}>¡Atención!</span> Alumnos desaprobados :
             </CAlert>
-        {desaprobados.map((el)=>(
-            <Typography variant="h6">{`${el.nombre} ${el.apellido} : ${el.nota}`}</Typography>
+        {desaprobados.map((el,index)=>(
+            <Typography key={index} variant="h6">{`${el.nombre} ${el.apellido} : ${el.nota}`}</Typography>
         ))}
         </div>
     )
@@ -197,8 +210,8 @@ function Bimestrales() {
             <CAlert color="primary">
                 Alumnos que aprobaron : 
             </CAlert>
-        {aprobados.map((el)=>(
-            <Typography variant="h6">{`${el.nombre} ${el.apellido} : ${el.nota}`}</Typography>
+        {aprobados.map((el,index)=>(
+            <Typography key={index} variant="h6">{`${el.nombre} ${el.apellido} : ${el.nota}`}</Typography>
         ))}
         </div>
     )
@@ -207,8 +220,8 @@ function Bimestrales() {
             <CAlert color="warning">
                 Alumnos con nota regular : 
             </CAlert>
-        {neutral.map((el)=>(
-            <Typography variant="h6">{`${el.nombre} ${el.apellido} : ${el.nota}`}</Typography>
+        {neutral.map((el,index)=>(
+            <Typography key={index} variant="h6">{`${el.nombre} ${el.apellido} : ${el.nota}`}</Typography>
         ))}
         </div>
     )

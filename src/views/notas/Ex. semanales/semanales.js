@@ -6,7 +6,7 @@ import { Grid, CircularProgress , makeStyles,TextField} from '@material-ui/core'
 import BackContext from 'src/Provider/BackContext';
 
 
-const styles=makeStyles({
+const styles_2=makeStyles({
     container:{
         marginTop: "1rem",
         marginBottom:"1rem"
@@ -14,9 +14,36 @@ const styles=makeStyles({
     
 })
 
+const useStyles = makeStyles((theme) => ({
+    modal: {
+      position: 'absolute',
+      width: 400,
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)'
+    },
+    iconos:{
+      cursor: 'pointer'
+    }, 
+    inputMaterial:{
+      width: '100%'
+    },
+    root:{
+        '& .MuiTextField-root': {
+            margin: theme.spacing(1),
+            width: '25ch',
+        },
+    }
+  }));
+
 
 function Semanales() {
-    const classes=styles();
+    const styles=useStyles();
+    const classes=styles_2();
     const [alumnos,setAlumnos]=useState([]);
     const [cursos,setCursos]=useState([]);
     const [examenes,setExamenes]=useState([]);
@@ -137,15 +164,15 @@ function Semanales() {
 
     const pie = {
         labels: [
-          'Aprobados',
           'Desaprobados',
+          'Aprobados',
           'Neutral',
         ],
         datasets: [
           {
             data: [20, 50, 100],
             backgroundColor: [
-              '#FF6384',
+              '#FC0404',
               '#36A2EB',
               '#FFCE56',
             ],
@@ -178,12 +205,27 @@ function Semanales() {
                     </option>
                 ))}
             </TextField>) :<CircularProgress size={50}/> }
+            {/* <TextField 
+                className={styles.inputMaterial} 
+                id="standard-select-currency"
+                select
+                label="Semana"
+                value={asistencia}
+                onChange={handleChange}
+                helperText="Seleccione el tipo de Asistencia"
+            >
+                {tipoAsistencia.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                {option.label}
+                </MenuItem>
+                ))}
+            </TextField> */}
             
             {
                 dataExamenes?.length  ? (<MaterialTable
                 columns={columns}
                 data={dataExamenes}
-                title="Sección A - Exámenes Mensuales"
+                title="Sección A - Exámenes Semanales"
                 actions={[
                     {
                         icon:'edit',
