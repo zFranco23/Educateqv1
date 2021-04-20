@@ -4,37 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { CButton } from '@coreui/react';
 import BackContext from '../../../Provider/BackContext';
+import { Typography } from '@material-ui/core';
 
-const Cursos = [
-    {
-      value: 'Matemática 1',
-      label: 'Matemática 1',
-    },
-    {
-      value: 'Religión',
-      label: 'Religión',
-    },
-    {
-      value: 'Física',
-      label: 'Física',
-    },
-    {
-      value: 'Química',
-      label: 'Química',
-    },
-    {
-      value: 'Comunicación Social',
-      label: 'Comunicación Social',
-    },
-    {
-      value: 'Razonamiento Verbal',
-      label: 'Razonamiento Verbal',
-    },
-    {
-      value: 'Algebra',
-      label: 'Algebra',
-    }  
-  ];
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -46,24 +18,101 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 function Observaciones() {
+
+
   const url="https://api-colegio-g12.herokuapp.com/escuela/buscar-alumnos-del-tutor";
+
+  const urlObservaciones="https://api-colegio-g12.herokuapp.com/escuela/guardar-observacion";
+
   const {userId}=useContext(BackContext);
+
+  /* const url_insert=`${urlObservaciones}`; */
 
   const classes = useStyles();
 
   const [value, setValue] = useState('Controlled');
   const [dataAlumno,setdataAlumno]=useState([]);
-  const [curso, setCurso] = useState('Matemática 1');
+  const [curso, setCurso] = useState("");
+  const [cursos,setCursos]=useState([]);
+  const [observaciones,setObservaciones]=useState()
+  const [observacion,setObservacion]=useState("");
+  const [alumnoInsertar,setAlumnoInsertar]=useState(null);
+  const [dataInsertar,setDataInsertar]=useState("");
+  const [cursoInsertar,setCursoInsertar]=useState("")
 
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const handleObservacion = (event) => {
+    setObservacion(event.target.value);
   };
 
   const handleCurso = (event) => {
     setCurso(event.target.value);
+    const {id}= cursos.find(el => el.label ==event.target.value);
+    setCursoInsertar(id);
   }
 
+  const setearAlumno = (data) =>{
+    setAlumnoInsertar({nombre:data.nombre,apellido:data.apellido});
+    const {id}= cursos.find(el => el.label ==curso);
+  
+    const student=dataAlumno.find(al => al.orden==data.orden);
+    
+    
+
+    setDataInsertar(student.id);
+    setCursoInsertar(id);
+    traerObservaciones(id);
+  }
+
+  const traerObservaciones = async (id) =>{
+
+    const response= await axios.get("https://api-colegio-g12.herokuapp.com/escuela/observacion-alumno/607b3ffe7dbc3f0015d6fce8/${}"
+    )
+
+    console.log(response.data);
+  }
+
+  const resetearAlumno = () =>{
+    setAlumnoInsertar({});
+  }
+
+  const cleanData= () =>{
+    setDataInsertar("");
+    setObservacion("");
+    setAlumnoInsertar({});
+  }
+  const postData= async () => {
+    try {
+      const {data}=await axios({
+          method: "POST",
+          url: urlObservaciones,
+          data : {
+            descripcion:observacion,
+            alumno:dataInsertar,
+            curso:cursoInsertar,
+            IdUser:userId
+          }
+        })
+        if(data.ok){
+          cleanData();
+          console.log("aaa");
+        }
+      
+  } catch (error) {
+      alert("No se insertó");
+  }
+}
+
+/*   const actualizarObservacion = async () =>{
+    const put = await axios.put('https://api-colegio-g12.herokuapp.com/escuela/actualizar-observacion', {
+                idAlumno:buscarId(idEdit),
+                nombre:nameEdit,
+                apellido:lastNameEdit,
+                nacimiento:new Date(birthdayOriginalEdit),
+                telefono:phoneEdit,    
+
+        })
+  } */
 
     const columns=[
         {
@@ -83,37 +132,33 @@ function Observaciones() {
 
     async function getData(){
       const response=await fetch(`${url}/${userId}`);
-      const {alumnos}=await response.json();
+      const {tutor:{cursos},alumnos}=await response.json();
       const newData=alumnos.map((alumno,index)=>(
           {
+              id:alumno._id,
               orden:index+1,
               apellido:alumno.apellido,
               nombre:alumno.nombre,
           }
       ))
       setdataAlumno(newData);
+      const newCourses=cursos.map((course,i)=>({
+        value: course.nombre,
+        label: course.nombre,
+        id: course._id
+      }))
+      setCursos(newCourses);
     }
 
     useEffect(()=>{
       getData();
     },[])
 
-    const data = [
-    
-        {orden:1, apellido:' Flores Solis',nombre: 'Hector Alexis'},
-        {orden:2, apellido:' Dominguez Nonalaya', nombre: 'Alexander Berney'},
-        {orden:3, apellido:' Correa Atucsa',nombre: 'Breiner Roiser'},
-        {orden:4, apellido:' Hermenegildo Flores', nombre: 'Franco Jossep'},
-        {orden:5, apellido:' Cueva Heras', nombre: 'Kevin Rodrigo'},
-        {orden:6, apellido:' Flores Pucho',nombre: 'Juan Carlos'}
-    ]
-
     return (
-        <div style={{ maxWidth: "100%" }}>
-            <TextField
+        <div style={{ maxWidth: "100%"}}>
+          <TextField
                 id="outlined-select-currency-native"
                 select
-                label="Bimestre"
                 value={curso}
                 onChange={handleCurso}
                 SelectProps={{
@@ -122,13 +167,14 @@ function Observaciones() {
                 helperText="Seleccione un Curso"
                 variant="outlined"
             >
-                {Cursos.map((option) => (
+                {cursos.map((option) => (
                 <option key={option.value} value={option.value}>
                 {option.label}
                 </option>
                 ))}
             </TextField><br/><br/>
-            <MaterialTable
+          <div style={{display:"flex",justifyContent:"space-between"}}>
+          <MaterialTable
                 columns={columns}
                 data={dataAlumno}
                 style={{float:'left'}}
@@ -137,12 +183,12 @@ function Observaciones() {
                     {
                         icon:'edit',
                         tooltip: 'Editar Observación',
-                        onClick:(event,rowData)=>alert('Has elegido editar al alumno:'+rowData.nombre)
+                        onClick:(event,rowData)=>setearAlumno(rowData)
                     },
                     {
                         icon:'delete',
                         tooltip: 'Eliminar Observación',
-                        onClick:(event,rowData)=>window.confirm('¿Estás seguro de eliminar al alumno: '+rowData.nombre+'?')
+                        onClick:(event,rowData)=>resetearAlumno()
                     }
 
                 ]}
@@ -154,26 +200,32 @@ function Observaciones() {
                         actions:'Acciones'
                     }
                 }}
+      
             />
-            <TextField
-                id="outlined-multiline-static"
-                label="Observación"
-                style={{float:'right',marginRight:'50px',marginTop:'80px',width:'350px'}}
-                multiline
-                rows={8}
-                defaultValue="Default Value"
-                variant="outlined"
-            />
-            <TextField
-                id="outlined-multiline-static"
-                label="Record"
-                style={{float:'right',marginRight:'150px',marginTop:'100px'}}
-                multiline
-                rows={2}
-                defaultValue="Default Value"
-                variant="outlined"
-            />
-            <CButton color="success" style={{marginTop:'20px', marginLeft:'780px'}}>Guardar</CButton>
+            <div style={{display:"flex",flexDirection:"column",alignItems:"center",paddingBottom:"4rem",justifyContent:"center"}}>
+              {alumnoInsertar?.nombre &&  <Typography style={{marginBottom:"-4rem"}} variant="h6">Editando a : {`${alumnoInsertar.nombre} ${alumnoInsertar.apellido}`}</Typography>}
+              
+              <TextField
+                
+                  id="outlined-multiline-static"
+                  label="Observación"
+                  value={observacion}
+                  style={{float:'right',marginRight:'50px',marginTop:'80px',width:'350px'}}
+                  multiline
+                  rows={8}
+                  variant="outlined"
+                  onChange={handleObservacion}
+              />
+              <div style={{display:"flex",justifyContent:""}}>
+                <CButton style={{marginTop:"2rem"}}color="success" onClick={postData}>Guardar</CButton>
+                <CButton style={{marginTop:"2rem",marginLeft:"1rem"}}color="primary" onClick={cleanData}>Cancelar</CButton>
+              </div>
+              
+            </div>
+            
+          </div>
+          
+            
         </div>
     )
 }

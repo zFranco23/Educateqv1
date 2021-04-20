@@ -92,7 +92,7 @@ function Cursos() {
 
     useEffect(()=>{
         getData();
-    },[dataCurso])
+    },[])
 
     const columns=[
         {

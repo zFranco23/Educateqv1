@@ -203,7 +203,7 @@ function Alumno() {
 
     useEffect(()=>{
         getData();
-    },[dataAlumno])
+    },[])
 
 const columns=[
     {
@@ -325,9 +325,8 @@ const bodyEditar=(
                         actions:'Acciones'
                     }
                 }}
-            />) : <CircularProgress size="50"/>}
+            />) : <CircularProgress size={50}/>}
             
-
         </div>
     )
 }

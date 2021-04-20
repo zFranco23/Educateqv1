@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect,useContext } from 'react';
 import MaterialTable from 'material-table';
 import {CChart} from '@coreui/react-chartjs'
 import Typography from '@material-ui/core/Typography'
-import { Grid, makeStyles,TextField} from '@material-ui/core';
+import { Grid, CircularProgress , makeStyles,TextField} from '@material-ui/core';
+import BackContext from 'src/Provider/BackContext';
 
 
 const styles=makeStyles({
@@ -13,44 +14,85 @@ const styles=makeStyles({
     
 })
 
-const Cursos = [
-    {
-      value: 'Matemática 1',
-      label: 'Matemática 1',
-    },
-    {
-      value: 'Religión',
-      label: 'Religión',
-    },
-    {
-      value: 'Física',
-      label: 'Física',
-    },
-    {
-      value: 'Química',
-      label: 'Química',
-    },
-    {
-      value: 'Comunicación Social',
-      label: 'Comunicación Social',
-    },
-    {
-      value: 'Razonamiento Verbal',
-      label: 'Razonamiento Verbal',
-    },
-    {
-      value: 'Algebra',
-      label: 'Algebra',
-    }  
-  ];
-
 
 function Semanales() {
     const classes=styles();
-    const [curso, setCurso] = useState("Matemática 1");
-    const handleCurso = (event) => {
-        setCurso(event.target.value);
+    const [alumnos,setAlumnos]=useState([]);
+    const [cursos,setCursos]=useState([]);
+    const [examenes,setExamenes]=useState([]);
+    const [exaCurso,setExaCurso]=useState([]);
+    const [cursoSelected,setCursoSelected]=useState("");
+    const [dataExamenes,setDataExamenes]=useState([]);
+
+    const urlCursos="https://api-colegio-g12.herokuapp.com/escuela/buscar-alumnos-del-tutor";
+    const urlExamenes="https://api-colegio-g12.herokuapp.com/escuela/ver-examenBimestral";
+
+
+    const {userId}=useContext(BackContext);
+
+
+
+    const handleCursoExamen=(e)=>{
+        setCursoSelected(e.target.value);
+        const {id} = cursos.find(curso => curso.label==e.target.value);  
+        const exaForCourse=examenes.filter(exam => exam.curso==id);
+        setExaCurso(exaForCourse);
+        const arrayData=exaForCourse.map((el,index)=>{
+            const jsonData=alumnos.find(alumno=>alumno.id == el.alumno);
+            jsonData.nota=el.nota;
+            return jsonData;
+        });
+        makeData(arrayData);  
     }
+
+    const makeData= (arrayData) =>{
+        const newData= arrayData.map(({nombre,apellido,nota},i)=>(
+            {
+                orden : i+1,
+                nombre,
+                apellido,
+                nota
+            }
+        ))
+        setDataExamenes(newData);
+    }
+    const changeData = (courses) =>{
+        const newCourses=courses.map((course,i)=>({
+            value: course.nombre,
+            label: course.nombre,
+            id: course._id
+        }))
+        setCursos(newCourses);
+    }
+    const changeDataAlumnos = (students) => {
+        const newStudents=students.map((student,i)=>({
+            id:student._id,
+            nombre:student.nombre,
+            apellido:student.apellido
+        }))
+
+        setAlumnos(newStudents);
+    }
+
+    async function getData (){
+        //Cursos
+        const response=await fetch(`${urlCursos}/${userId}`);
+        const {alumnos,tutor:{cursos}}=await response.json();
+        changeData(cursos);
+        changeDataAlumnos(alumnos);
+    }
+
+    async function getExaCurso(){     
+        const response = await fetch(`${urlExamenes}/${userId}`);
+        const {examen}= await response.json();
+        setExamenes(examen);
+    }
+
+    useEffect(()=>{
+        getData();
+        getExaCurso();
+    },[])
+
     const columns=[
         {
             title:'Nro. Orden',
@@ -71,16 +113,6 @@ function Semanales() {
             type:"numeric"
         }
     ];
-
-    const data = [
-    
-        {orden:1, apellido:' Flores Solis',nombre: 'Hector Alexis', nota: 19},
-        {orden:2, apellido:' Dominguez Nonalaya', nombre: 'Alexander Berney', nota: 19},
-        {orden:3, apellido:' Correa Atucsa',nombre: 'Breiner Roiser', nota: 19},
-        {orden:4, apellido:' Hermenegildo Flores', nombre: 'Franco Jossep' , nota: 19},
-        {orden:5, apellido:' Cueva Heras', nombre: 'Kevin Rodrigo', nota: 19},
-        {orden:6, apellido:' Flores Pucho',nombre: 'Juan Carlos', nota: 19}
-    ]
 
     /**GRAFICO */
 
@@ -123,16 +155,16 @@ function Semanales() {
               '#FFCE56',
             ],
           }],
-      };
+    };
 
     return (
         <div style={{ maxWidth: "100%" }}>
-            <TextField
+            {cursos?.length ? (<TextField
                 id="outlined-select-currency-native"
                 select
                 label="Curso"
-                value={curso}
-                onChange={handleCurso}
+                value={cursoSelected}
+                onChange={handleCursoExamen}
                 SelectProps={{
                     native: true,
                 }}
@@ -140,18 +172,18 @@ function Semanales() {
                 variant="outlined"
                 style={{marginBottom:"1rem"}}
             >
-                {Cursos.map((option) => (
-                <option key={option.value} value={option.value}>
-                {option.label}
-                </option>
+                { cursos.map((option) => (
+                    <option key={option.value} value={option.value}>
+                    {option.label}
+                    </option>
                 ))}
-            </TextField>
+            </TextField>) :<CircularProgress size={50}/> }
             
-            <MaterialTable
-                maxWidth="50%"
+            {
+                dataExamenes?.length  ? (<MaterialTable
                 columns={columns}
-                data={data}
-                title="Sección A - Exámenes Semanales"
+                data={dataExamenes}
+                title="Sección A - Exámenes Mensuales"
                 actions={[
                     {
                         icon:'edit',
@@ -173,7 +205,8 @@ function Semanales() {
                         actions:'Acciones'
                     }
                 }}
-            />
+                /> ) : <div></div>
+            }
             
             <Grid container className={classes.container}>
                 <Grid item xs={12} sm={12} md={6} className={classes.graphic} >
