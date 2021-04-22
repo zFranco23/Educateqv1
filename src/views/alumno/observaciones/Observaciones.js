@@ -5,8 +5,10 @@ import TextField from '@material-ui/core/TextField';
 import { CButton } from '@coreui/react';
 import BackContext from '../../../Provider/BackContext';
 import { Typography } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 
 import axios from 'axios';
+import { AlertTitle } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,6 +33,14 @@ function Observaciones() {
   /* const url_insert=`${urlObservaciones}`; */
 
   const classes = useStyles();
+  /*Alerts*/
+  const [success,setSuccess]=useState(false);
+  const [successActu,setSuccessActu]=useState(false);
+  const [cantZero,setCantZero]=useState(false);
+  const [successDelete,setSuccessDelete]=useState(false);
+  const [errorActu,setErrorActu]=useState(false);
+  const [errorDelete,setErrorDelete]=useState(false);
+  const [errorInsert,setErrorInsert]=useState(false);
 
   const [dataAlumno,setdataAlumno]=useState([]);
   const [curso, setCurso] = useState("");
@@ -45,18 +55,36 @@ function Observaciones() {
 
 
   const handleObservacion = (event) => {
+    const obs=event.target.value;
     setObservacion(event.target.value);
+    if(obs.length<1){
+      setCantZero(true);
+    }else{
+      setCantZero(false);
+    }
   };
 
   const handleCurso = (event) => {
+    cleanData();
     setCurso(event.target.value);
     const {id}= cursos.find(el => el.label ==event.target.value);
     setCursoInsertar(id);
     traerObservaciones(id);
   }
-
+  const cleanAlerts= () =>{
+    setErrorDelete(false);
+    setSuccessDelete(false);
+    setSuccessActu(false);
+    setErrorActu(false);
+    setErrorInsert(false);
+    setSuccess(false);
+    setCantZero(false);
+  }
   const setearAlumno = (data) =>{
     traerObservaciones(cursoInsertar);
+    cleanAlerts();
+    setSuccess(false);
+    
     setAlumnoInsertar({nombre:data.nombre,apellido:data.apellido});
     const student=dataAlumno.find(al => al.orden==data.orden);
     setDataInsertar(student.id);
@@ -67,6 +95,7 @@ function Observaciones() {
       setObservacion(obsAlumno.descripcion)
       setIdObservacion(obsAlumno._id);
     }else{
+      setSuccessDelete(false);
       setHasObservation(false);
       setObservacion("");
       setIdObservacion("");
@@ -74,7 +103,25 @@ function Observaciones() {
     
   }
 
-
+  const deleteObs = async()=>{
+    try{
+        const {data}=await axios.delete("https://api-colegio-g12.herokuapp.com/escuela/eliminar-observacion",
+        {
+            data :{
+                observacionId:idObservacion
+            }
+        }
+        )
+      if(data.ok){
+        cleanData();
+        setHasObservation(false);
+        setSuccessDelete(true);
+      }
+    }catch(e){
+      setErrorDelete(true);
+    }
+    
+  }
   const traerObservaciones = async (id) =>{
 
     const response=await fetch(`${urlTraerObservaciones}/${userId}/${id}`);
@@ -85,61 +132,64 @@ function Observaciones() {
   }
 
   const resetearAlumno = () =>{
+    setSuccessActu(false);
+    setErrorActu(false);
+    setErrorInsert(false);
+    setSuccess(false);
+    setCantZero(false);
     setAlumnoInsertar({});
   }
 
   const cleanData= () =>{
+    cleanAlerts();
     setDataInsertar("");
     setObservacion("");
     setAlumnoInsertar({});
   }
   const postData= async () => {
-
-    if(!hasObservation){
-        try {
-          const {data}=await axios({
-              method: "POST",
-              url: urlObservaciones,
-              data : {
-                descripcion:observacion,
-                alumno:dataInsertar,
-                curso:cursoInsertar,
-                IdUser:userId
-              }
-            })
-            if(data.ok){
-              cleanData();
-              console.log("aaa");
-            }
-          
-      } catch (error) {
-          alert("No se insertó");
-      }
+    if(observacion.length <1){
+      setCantZero(true);
     }else{
-      try{
-        const put = await axios.put('https://api-colegio-g12.herokuapp.com/escuela/actualizar-observacion', {
-                observacionId:idObservacion,
-                descripcion:observacion 
-        });
-      
-        console.log(put);
-      }catch(error){
-        alert("No se pudo actualizar al alumno");
+        if(!hasObservation){
+          try {
+            const {data}=await axios({
+                method: "POST",
+                url: urlObservaciones,
+                data : {
+                  descripcion:observacion,
+                  alumno:dataInsertar,
+                  curso:cursoInsertar,
+                  IdUser:userId
+                }
+              })
+              if(data.ok){
+                cleanData();
+                setSuccess(true);
+              }
+            
+        } catch (error) {
+            setErrorInsert(true);
+        }
+      }else{
+        try{
+          const {data} = await axios.put('https://api-colegio-g12.herokuapp.com/escuela/actualizar-observacion', {
+                  observacionId:idObservacion,
+                  descripcion:observacion 
+          });
+          if(data.ok){
+            cleanData();
+            setSuccessActu(true);
+          }
+          
+        }catch(error){
+          setErrorActu(true);
+        }
       }
     }
+
+    
     
 }
-
-/*   const actualizarObservacion = async () =>{
-    const put = await axios.put('https://api-colegio-g12.herokuapp.com/escuela/actualizar-observacion', {
-                idAlumno:buscarId(idEdit),
-                nombre:nameEdit,
-                apellido:lastNameEdit,
-                nacimiento:new Date(birthdayOriginalEdit),
-                telefono:phoneEdit,    
-
-        })
-  } */
 
     const columns=[
         {
@@ -187,8 +237,9 @@ function Observaciones() {
         id: course._id
       }))
       setCursos(newCourses);
-
-      
+      setCurso(newCourses[0].value);
+      const {id}= newCourses.find(el => el.label == newCourses[0].value);
+      setCursoInsertar(id);
     }
 
     useEffect(()=>{
@@ -214,11 +265,10 @@ function Observaciones() {
                 </option>
                 ))}
             </TextField><br/><br/>
-          <div style={{display:"flex",justifyContent:"space-between"}}>
+          <div style={{display:"flex",flexWrap:"wrap",justifyContent:"space-between"}}>
           <MaterialTable
                 columns={columns}
                 data={dataAlumno}
-                style={{float:'left'}}
                 title="Sección A"
                 actions={[
                     {
@@ -243,23 +293,30 @@ function Observaciones() {
                 }}
       
             />
-            <div style={{display:"flex",flexDirection:"column",alignItems:"center",paddingBottom:"4rem",justifyContent:"center"}}>
-              {alumnoInsertar?.nombre &&  <Typography style={{marginBottom:"-4rem"}} variant="h6">Editando a : {`${alumnoInsertar.nombre} ${alumnoInsertar.apellido}`}</Typography>}
-              
+            <div style={{display:"flex",flexWrap:"wrap",flexDirection:"column",alignItems:"center",paddingBottom:"4rem",justifyContent:"space-evenly"}}>
+              {alumnoInsertar?.nombre &&  <Typography variant="h6">Editando a : {`${alumnoInsertar.nombre} ${alumnoInsertar.apellido}`}</Typography>}
+              { errorInsert &&  <Alert variant="outlined" severity="error"><AlertTitle>Error</AlertTitle><strong>No se pudo registrar la observación.</strong> </Alert>}
+              { successActu &&  <Alert variant="outlined" severity="success"><AlertTitle>Correcto</AlertTitle><strong>Se actualizó correctamente la observación.</strong> </Alert>}
+              { errorDelete &&  <Alert variant="outlined" severity="error"><AlertTitle>Error</AlertTitle><strong>No se pudo eliminar la observación.</strong> </Alert>}
+              { errorActu &&  <Alert variant="outlined" severity="error"><AlertTitle>Error</AlertTitle><strong>No se pudo actualizar la observación.</strong> </Alert>}
+              { cantZero &&  <Alert variant="outlined" severity="warning"><AlertTitle>Atención</AlertTitle><strong>La observación no deberia estar vacia...</strong> </Alert>}
+              { successDelete  && <Alert variant="outlined"severity="success"><AlertTitle>Correcto</AlertTitle><strong>Se eliminó la observación</strong></Alert>}
+              { success  && <Alert variant="outlined"severity="success"><AlertTitle>Correcto</AlertTitle><strong>Se registró correctamente la observación</strong></Alert>}
               <TextField
                 
                   id="outlined-multiline-static"
                   label="Observación"
                   value={observacion}
-                  style={{float:'right',marginRight:'50px',marginTop:'80px',width:'350px'}}
+                  style={{width:'350px'}}
                   multiline
                   rows={8}
                   variant="outlined"
                   onChange={handleObservacion}
               />
               <div style={{display:"flex",justifyContent:""}}>
-                <CButton style={{marginTop:"2rem"}}color="success" onClick={postData}>Guardar</CButton>
-                <CButton style={{marginTop:"2rem",marginLeft:"1rem"}}color="primary" onClick={cleanData}>Cancelar</CButton>
+                <CButton color="success" onClick={postData}>{hasObservation? "Actualizar" : "Guardar" }</CButton>
+                <CButton style={{marginLeft:"1rem"}} color="primary" onClick={cleanData}>Cancelar</CButton>
+                {hasObservation && <CButton style={{marginLeft:"1rem"}} color="danger" onClick={deleteObs}>Eliminar</CButton>}
               </div>
               
             </div>

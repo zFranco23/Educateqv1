@@ -3,7 +3,18 @@ import MaterialTable from 'material-table';
 import {Modal, TextField,Button,MenuItem} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {
-    CButton
+    CButton,
+    CCard,
+    CCardBody,
+    CCardGroup,
+    CCol,
+    CContainer,
+    CForm,
+    CInput,
+    CInputGroup,
+    CInputGroupPrepend,
+    CInputGroupText,
+    CRow
   } from '@coreui/react';
 
   const tipoAsistencia = [

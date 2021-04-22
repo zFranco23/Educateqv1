@@ -69,31 +69,11 @@ function Bimestrales() {
         
         
     }
-    const changeData = (courses) =>{
-        const newCourses=courses.map((course,i)=>({
-            value: course.nombre,
-            label: course.nombre,
-            id: course._id
-        }))
-        setCursos(newCourses);
 
-
-    }
-    const changeDataAlumnos = (students) => {
-        const newStudents=students.map((student,i)=>({
-            id:student._id,
-            nombre:student.nombre,
-            apellido:student.apellido
-        }))
-
-        setAlumnos(newStudents);
-    }
-
-    async function getData (){
+    async function getData (examenes){
         //Cursos
         const response=await fetch(`${urlCursos}/${userId}`);
         const {alumnos,tutor:{cursos}}=await response.json();
-
         const arrayVacio=new Array();
         const a=new Array();
 
@@ -103,19 +83,40 @@ function Bimestrales() {
             }
             arrayVacio.push(cursos[i].nombre);
         }
-        
-        changeData(a);
-        changeDataAlumnos(alumnos);
+        const newCourses=a.map((course,i)=>({
+            value: course.nombre,
+            label: course.nombre,
+            id: course._id
+        }))
+        setCursos(newCourses);
+        setCursoSelected(newCourses[0].value)
+        const newStudents=alumnos.map((student,i)=>({
+            id:student._id,
+            nombre:student.nombre,
+            apellido:student.apellido
+        }))
+
+        setAlumnos(newStudents);
+
+        const {id} = newCourses.find(curso => curso.label==newCourses[0].label);
+        const exaForCourse=examenes.filter(exam => exam.curso==id);
+        console.log(exaForCourse);
+        const arrayData=exaForCourse.map((el,index)=>{
+            const jsonData=newStudents.find(alumno=>alumno.id == el.alumno);
+            jsonData.nota=el.nota;
+            return jsonData;
+        });
+        makeData(arrayData);
     }
 
     async function getExaCurso(){     
         const response = await fetch(`${urlExamenes}/${userId}`);
         const {examen}= await response.json();
         setExamenes(examen);
+        getData(examen);
     }
 
     useEffect(()=>{
-        getData();
         getExaCurso();
     },[])
 
@@ -143,17 +144,56 @@ function Bimestrales() {
     /**Graficos */
     
     function displayCharts(){
+        let arrayData=Array();
+        let arrayNombre=Array();
+        let c1=0,c2=0,c3=0,c4=0,c5=0;
+        dataExamenes.forEach(({nombre,apellido,nota})=>{
+            arrayData.push(parseFloat(nota));
+            arrayNombre.push(`${nombre} ${apellido.charAt(0)}.`)
+            if(nota>=0 && nota<=3){
+                c1++;
+            }
+            if(nota>=4 && nota<=7){
+                c2++;
+            }
+            if(nota>=8 && nota<=11){
+                c3++;
+            }
+            if(nota>=12 && nota<=15){
+                c4++;
+            }
+            if(nota>=16 && nota<=20){
+                c5++;
+            }
+        })
+
         const bar={
-            labels: ['January', 'February', 'March', 'April', 'May'],
+            labels: ['0 - 3', '4 - 7', '8 - 11', '12 - 15', '16 - 20'],
             datasets: [
                 {
-                    label: 'My First dataset',
-                    backgroundColor: 'green',
-                    borderColor: 'black',
+                    label: 'Notas en rango',
+                    backgroundColor: '#BAE617',
+                    borderColor: '#8EAB22',
                     borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-                    hoverBorderColor: 'rgba(255,99,132,1)',
-                    data: [0, 5, 10, 15, 20],
+                    hoverBackgroundColor: '#C8C536',
+                    hoverBorderColor: '98963C',
+                    data: [c1, c2, c3, c4, c5],
+                },
+            ],
+        }
+        const bar_2={
+            labels: arrayNombre,
+            datasets: [
+                {
+                    label: 'Nota',
+                    backgroundColor: 'green',
+                    borderColor: 'green',
+                    borderWidth: 2,
+                    hoverBackgroundColor: '#62D616',
+                    hoverBorderColor: '98963C',
+                    data: arrayData,
+                    barPercentage: 0.5,
+                    categoryPercentage: 1
                 },
             ],
         }
@@ -169,7 +209,7 @@ function Bimestrales() {
             ],
             datasets: [
               {
-                data: [neutral.length,aprobados.length,desaprobados.length],
+                data: [desaprobados.length,aprobados.length,neutral.length],
                 backgroundColor: [
                   '#FC0404',
                   '#36A2EB',
@@ -185,24 +225,34 @@ function Bimestrales() {
         
             
             return <Grid container className={classes.container}>
+            <Grid item xs={12} sm={12} md={12}>
+                <Typography style={{textAlign:"center",marginBottom:"0.5rem"}} variant="h6" > Grafico de alumno por nota </Typography>
+            <CChart  style={{height:"300px"}}type="bar" datasets={bar_2.datasets} labels={bar_2.labels} options={options}/>
+            </Grid>
             <Grid item xs={12} sm={12} md={6} className={classes.graphic} >
-                <Typography variant="h6" > Gráfico de Barras</Typography>
-                <CChart  type="bar" datasets={bar.datasets} labels="months" options={options}/>
+                <Typography style={{textAlign:"center",marginBottom:"0.5rem"}} variant="h6" > Gráfico de Barras</Typography>
+                <CChart  style={{height:"250px"}} type="bar" datasets={bar.datasets} labels={bar.labels} options={options}/>
             </Grid>
             <Grid item xs={12} sm={12} md={6}className={classes.graphic} >
-                <Typography variant="h6" >Resumen del salon</Typography>
+                <Typography style={{textAlign:"center",marginBottom:"0.5rem"}} variant="h6" >Resumen del salon</Typography>
                 <CChart type="pie" datasets={pie.datasets} labels={pie.labels} />
             </Grid>
             </Grid>
     }
+    
     const displayDesaprobados=(
         <div style={{margin:"1rem"}}>
             <CAlert color="danger">
             <span style={{fontWeight:"bold"}}>¡Atención!</span> Alumnos desaprobados :
             </CAlert>
-        {desaprobados.map((el,index)=>(
+        {
+            <div style={{marginLeft:"2rem"}} >
+                {desaprobados.map((el,index)=>(
             <Typography key={index} variant="h6">{`${el.nombre} ${el.apellido} : ${el.nota}`}</Typography>
-        ))}
+            ))
+            }
+            </div>
+        }
         </div>
     )
     const displayAprobados=(
@@ -210,9 +260,11 @@ function Bimestrales() {
             <CAlert color="primary">
                 Alumnos que aprobaron : 
             </CAlert>
-        {aprobados.map((el,index)=>(
+        {<div style={{marginLeft:"2rem"}}>
+            {aprobados.map((el,index)=>(
             <Typography key={index} variant="h6">{`${el.nombre} ${el.apellido} : ${el.nota}`}</Typography>
         ))}
+        </div> }
         </div>
     )
     const displayNeutral=(
@@ -220,9 +272,14 @@ function Bimestrales() {
             <CAlert color="warning">
                 Alumnos con nota regular : 
             </CAlert>
-        {neutral.map((el,index)=>(
+        {
+            <div style={{marginLeft:"2rem"}}>
+                {neutral.map((el,index)=>(
             <Typography key={index} variant="h6">{`${el.nombre} ${el.apellido} : ${el.nota}`}</Typography>
-        ))}
+            ))}
+            </div>
+        
+        }
         </div>
     )
     return (
@@ -249,7 +306,7 @@ function Bimestrales() {
             <MaterialTable
                 columns={columns}
                 data={dataExamenes}
-                title="Sección A - Exámenes Mensuales"
+                title="Sección A - Exámenes Bimestrales"
                 actions={[
                     {
                         icon:'edit',

@@ -1,0 +1,535 @@
+--SOtelo : 607b45177dbc3f0015d6fcfa
+LENGUAJE SEMANA 1
+{
+    "nota": "15",
+    "estado": "inactivo",
+    "semana": "1",
+    "alumno": "607b48c27dbc3f0015d6fd08",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "12",
+    "estado": "inactivo",
+    "semana": "1",
+    "alumno": "607b48e97dbc3f0015d6fd0b",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "10",
+    "estado": "inactivo",
+    "semana": "1",
+    "alumno": "607b48ee7dbc3f0015d6fd0c",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "11",
+    "estado": "inactivo",
+    "semana": "1",
+    "alumno": "607b48f37dbc3f0015d6fd0d",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "03",
+    "estado": "inactivo",
+    "semana": "1",
+    "alumno": "607b48fb7dbc3f0015d6fd0e",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "05",
+    "estado": "inactivo",
+    "semana": "1",
+    "alumno": "607b49027dbc3f0015d6fd0f",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "11",
+    "estado": "inactivo",
+    "semana": "1",
+    "alumno": "607b490b7dbc3f0015d6fd11",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "12",
+    "estado": "inactivo",
+    "semana": "1",
+    "alumno": "607b49127dbc3f0015d6fd12",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "10",
+    "estado": "inactivo",
+    "semana": "1",
+    "alumno": "607b49177dbc3f0015d6fd13",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "19",
+    "estado": "inactivo",
+    "semana": "1",
+    "alumno": "607b491c7dbc3f0015d6fd14",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "16",
+    "estado": "inactivo",
+    "semana": "1",
+    "alumno": "607f1517a553c00015bafe59",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+SEMANA 2
+{
+    "nota": "12",
+    "estado": "inactivo",
+    "semana": "2",
+    "alumno": "607b48c27dbc3f0015d6fd08",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "13",
+    "estado": "inactivo",
+    "semana": "2",
+    "alumno": "607b48e97dbc3f0015d6fd0b",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "14",
+    "estado": "inactivo",
+    "semana": "2",
+    "alumno": "607b48ee7dbc3f0015d6fd0c",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "15",
+    "estado": "inactivo",
+    "semana": "2",
+    "alumno": "607b48f37dbc3f0015d6fd0d",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "16",
+    "estado": "inactivo",
+    "semana": "2",
+    "alumno": "607b48fb7dbc3f0015d6fd0e",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "19",
+    "estado": "inactivo",
+    "semana": "2",
+    "alumno": "607b49027dbc3f0015d6fd0f",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "18",
+    "estado": "inactivo",
+    "semana": "2",
+    "alumno": "607b490b7dbc3f0015d6fd11",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "11",
+    "estado": "inactivo",
+    "semana": "2",
+    "alumno": "607b49127dbc3f0015d6fd12",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "12",
+    "estado": "inactivo",
+    "semana": "2",
+    "alumno": "607b49177dbc3f0015d6fd13",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "13",
+    "estado": "inactivo",
+    "semana": "2",
+    "alumno": "607b491c7dbc3f0015d6fd14",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "14",
+    "estado": "inactivo",
+    "semana": "2",
+    "alumno": "607f1517a553c00015bafe59",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+SEMANA 3
+{
+    "nota": "15",
+    "estado": "inactivo",
+    "semana": "3",
+    "alumno": "607b48c27dbc3f0015d6fd08",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "18",
+    "estado": "inactivo",
+    "semana": "3",
+    "alumno": "607b48e97dbc3f0015d6fd0b",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "14",
+    "estado": "inactivo",
+    "semana": "3",
+    "alumno": "607b48ee7dbc3f0015d6fd0c",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "13",
+    "estado": "inactivo",
+    "semana": "3",
+    "alumno": "607b48f37dbc3f0015d6fd0d",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "15",
+    "estado": "inactivo",
+    "semana": "3",
+    "alumno": "607b48fb7dbc3f0015d6fd0e",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "16",
+    "estado": "inactivo",
+    "semana": "3",
+    "alumno": "607b49027dbc3f0015d6fd0f",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "10",
+    "estado": "inactivo",
+    "semana": "3",
+    "alumno": "607b490b7dbc3f0015d6fd11",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "11",
+    "estado": "inactivo",
+    "semana": "3",
+    "alumno": "607b49127dbc3f0015d6fd12",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "15",
+    "estado": "inactivo",
+    "semana": "3",
+    "alumno": "607b49177dbc3f0015d6fd13",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "13",
+    "estado": "inactivo",
+    "semana": "3",
+    "alumno": "607b491c7dbc3f0015d6fd14",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "12",
+    "estado": "inactivo",
+    "semana": "3",
+    "alumno": "607f1517a553c00015bafe59",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+SEMANA 5
+{
+    "nota": "10",
+    "estado": "inactivo",
+    "semana": "5",
+    "alumno": "607b48c27dbc3f0015d6fd08",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "08",
+    "estado": "inactivo",
+    "semana": "5",
+    "alumno": "607b48e97dbc3f0015d6fd0b",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "06",
+    "estado": "inactivo",
+    "semana": "5",
+    "alumno": "607b48ee7dbc3f0015d6fd0c",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "07",
+    "estado": "inactivo",
+    "semana": "5",
+    "alumno": "607b48f37dbc3f0015d6fd0d",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "10",
+    "estado": "inactivo",
+    "semana": "5",
+    "alumno": "607b48fb7dbc3f0015d6fd0e",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "11",
+    "estado": "inactivo",
+    "semana": "5",
+    "alumno": "607b49027dbc3f0015d6fd0f",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "05",
+    "estado": "inactivo",
+    "semana": "5",
+    "alumno": "607b490b7dbc3f0015d6fd11",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "09",
+    "estado": "inactivo",
+    "semana": "5",
+    "alumno": "607b49127dbc3f0015d6fd12",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "12",
+    "estado": "inactivo",
+    "semana": "5",
+    "alumno": "607b49177dbc3f0015d6fd13",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "08",
+    "estado": "inactivo",
+    "semana": "5",
+    "alumno": "607b491c7dbc3f0015d6fd14",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "11",
+    "estado": "inactivo",
+    "semana": "5",
+    "alumno": "607f1517a553c00015bafe59",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+SEMANA 6
+{
+    "nota": "08",
+    "estado": "inactivo",
+    "semana": "6",
+    "alumno": "607b48c27dbc3f0015d6fd08",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "09",
+    "estado": "inactivo",
+    "semana": "6",
+    "alumno": "607b48e97dbc3f0015d6fd0b",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "14",
+    "estado": "inactivo",
+    "semana": "6",
+    "alumno": "607b48ee7dbc3f0015d6fd0c",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "13",
+    "estado": "inactivo",
+    "semana": "6",
+    "alumno": "607b48f37dbc3f0015d6fd0d",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "12",
+    "estado": "inactivo",
+    "semana": "6",
+    "alumno": "607b48fb7dbc3f0015d6fd0e",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "15",
+    "estado": "inactivo",
+    "semana": "6",
+    "alumno": "607b49027dbc3f0015d6fd0f",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "14",
+    "estado": "inactivo",
+    "semana": "6",
+    "alumno": "607b490b7dbc3f0015d6fd11",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "13",
+    "estado": "inactivo",
+    "semana": "6",
+    "alumno": "607b49127dbc3f0015d6fd12",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "11",
+    "estado": "inactivo",
+    "semana": "6",
+    "alumno": "607b49177dbc3f0015d6fd13",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "12",
+    "estado": "inactivo",
+    "semana": "6",
+    "alumno": "607b491c7dbc3f0015d6fd14",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "12",
+    "estado": "inactivo",
+    "semana": "6",
+    "alumno": "607f1517a553c00015bafe59",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+SEMANA 7
+{
+    "nota": "18",
+    "estado": "inactivo",
+    "semana": "7",
+    "alumno": "607b48c27dbc3f0015d6fd08",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "15",
+    "estado": "inactivo",
+    "semana": "7",
+    "alumno": "607b48e97dbc3f0015d6fd0b",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "12",
+    "estado": "inactivo",
+    "semana": "7",
+    "alumno": "607b48ee7dbc3f0015d6fd0c",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "13",
+    "estado": "inactivo",
+    "semana": "7",
+    "alumno": "607b48f37dbc3f0015d6fd0d",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "12",
+    "estado": "inactivo",
+    "semana": "7",
+    "alumno": "607b48fb7dbc3f0015d6fd0e",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "11",
+    "estado": "inactivo",
+    "semana": "7",
+    "alumno": "607b49027dbc3f0015d6fd0f",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "10",
+    "estado": "inactivo",
+    "semana": "7",
+    "alumno": "607b490b7dbc3f0015d6fd11",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "11",
+    "estado": "inactivo",
+    "semana": "7",
+    "alumno": "607b49127dbc3f0015d6fd12",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "10",
+    "estado": "inactivo",
+    "semana": "7",
+    "alumno": "607b49177dbc3f0015d6fd13",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "14",
+    "estado": "inactivo",
+    "semana": "7",
+    "alumno": "607b491c7dbc3f0015d6fd14",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
+{
+    "nota": "15",
+    "estado": "inactivo",
+    "semana": "7",
+    "alumno": "607f1517a553c00015bafe59",
+    "user": "607b45177dbc3f0015d6fcfa",
+    "curso": "607b50c67dbc3f0015d6fd17"
+}
