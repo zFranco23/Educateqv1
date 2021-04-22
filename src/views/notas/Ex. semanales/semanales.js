@@ -4,7 +4,7 @@ import {CChart, CChartLine} from '@coreui/react-chartjs'
 import Typography from '@material-ui/core/Typography'
 import { Grid, CircularProgress , makeStyles,TextField, MenuItem} from '@material-ui/core';
 import BackContext from 'src/Provider/BackContext';
-import { CAlert, CCard,CCardBody,CCardHeader } from '@coreui/react';
+import { CAlert, CButton, CCard,CCardBody,CCardHeader } from '@coreui/react';
 
 
 
@@ -37,7 +37,7 @@ function Semanales() {
     const [cursoSelected,setCursoSelected]=useState("");
     const [dataExamenes,setDataExamenes]=useState([]);
     const [promNotas,setPromNotas]=useState([]);
-    const [alumnMax,setAlumnMax]=useState({});
+    const [alumnMax,setAlumnMax]=useState(null);
     const [alumnMin,setAlumnMin]=useState({});
     /*Graficas*/
     const [neutral, setNeutral] = useState([]);
@@ -446,29 +446,38 @@ function Semanales() {
                 }}
                 />
             }
+            <CCard style={{marginTop:"1rem"}}>
+                <CCardHeader style={{display:"flex",justifyContent:"center"}}>
+                    <Typography variant="h6">Cuadro de mérito</Typography>
+                    <CButton style={{marginLeft:"1rem"}}color="info" variant="outline" onClick={()=>getStudent(idCurso)}>Traer Datos</CButton>
+                </CCardHeader>
+                {alumnMax && <CCardBody>
+                    <Typography variant="h6">Alumno con menor rendimiento : {`${alumnMin.nombre} ${alumnMin.apellido}`}</Typography>
+                    <Typography variant="h6">Alumno con mayor rendimiento : {`${alumnMax.nombre} ${alumnMax.apellido}`}</Typography>
+                    <CChartLine
+                        datasets={[
+                        {
+                            label: 'Data One',
+                            backgroundColor: 'rgb(228,102,81,0.9)',
+                            data: [30, 39, 10, 50, 30, 70, 35]
+                        },
+                        {
+                            label: 'Data Two',
+                            backgroundColor: 'rgb(0,216,255,0.9)',
+                            data: [39, 80, 40, 35, 40, 20, 45]
+                          }
+
+                        ]}
+                        labels="meses"
+                    />
+                </CCardBody>}
+            </CCard>
             
             {dataExamenes?.length && displayCharts()}
 
             {desaprobados?.length>0 && displayDesaprobados}
             {aprobados?.length>0 && displayAprobados}
             {neutral?.length>0 && displayNeutral}
-            <CCard>
-                    <CCardHeader>
-                    Line Chart
-                    </CCardHeader>
-                    <CCardBody>
-                    <CChartLine
-                        datasets={[
-                        {
-                            label: 'Data One',
-                            data: [30, 39, 10, 50, 30, 70, 35]
-                        }
-                        ]}
-                        labels="meses"
-                    />
-                    </CCardBody>
-                </CCard>
-                <button onClick={()=>getStudent(idCurso)}>Mostrar bajo</button>
         
         </div>
     )
