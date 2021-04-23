@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import './scss/style.scss';
 
 import Provider from './Provider/ProviderBackContext';
@@ -36,6 +36,7 @@ class App extends Component {
 
   }
   render() {
+    
     return (
       <Provider>
         <HashRouter>

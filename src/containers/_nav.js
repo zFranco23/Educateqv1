@@ -47,12 +47,6 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Asistencia',
-    to: '/alumno/asistencia',
-    icon: 'cil-check',
-  },
-  {
-    _tag: 'CSidebarNavItem',
     name: 'Cursos',
     to: '/alumno/cursos',
     icon: 'cil-book',

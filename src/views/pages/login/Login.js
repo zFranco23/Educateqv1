@@ -20,16 +20,26 @@ import CIcon from '@coreui/icons-react'
 
 import BackContext from '../../../Provider/BackContext';
 import axios from 'axios';
+import { Typography } from '@material-ui/core';
+import { logoNegative } from 'src/assets/icons/logo-negative';
+import { Alert } from '@material-ui/lab';
 
 
 
 const Login = (props) => {
+  const urlRegister="https://api-colegio-g12.herokuapp.com/api/register";
+  const urlVerify ="https://api-colegio-g12.herokuapp.com/api/verify";
   const url="https://api-colegio-g12.herokuapp.com/escuela/login";
 
   const {setUserId,setUserName}=useContext(BackContext);
+
   const [id,setId]=useState("");
   const [password,setPassword]=useState("");
   const [state,setState]=useState(false);
+  const [showInput,setShowInput]=useState(false);
+  const [token,setToken]=useState("");
+  const [secret,setSecret]=useState("");
+  const [idSecret,setIdSecret]=useState("");
 
   
   const handleSubmit = async ()=>{
@@ -42,13 +52,21 @@ const Login = (props) => {
           password:password
         }
       })
-      const {userLogueado: {_id,nombre},ok}=data;
+      const {userLogueado: {_id,idUser,nombre},ok}=data;
       
       if(ok){
-        setState(true);
-        props.ga();
-        setUserId(_id)
-        setUserName(nombre)
+        //Setear datos del user
+        setUserId(_id);
+        setUserName(nombre);
+        setIdSecret(idUser);
+         /* //Authenticator
+        const {data}=await axios.post(urlRegister);
+        console.log(data.id,data.secret);
+        setIdSecret(data.id);
+        setSecret(data.secret); */
+
+        //Pasar a authenticator
+        setShowInput(true);  
       }
     } catch (error) {
       alert("Usuario incorrecto")
@@ -56,6 +74,21 @@ const Login = (props) => {
     }
   }
 
+  const handleSubmitToken= async () =>{
+    const {data}=await axios({
+      method: "POST",
+      url: urlVerify,
+      data : {
+        userID:idSecret,
+        token:token
+      }
+    })
+    console.log(data);
+    if(data.verified){
+        setState(true);
+        props.ga();
+    }
+  }
   
   return (
     <div className="c-app c-default-layout flex-row align-items-center" style={{backgroundImage:'url('+Image+')'}}>
@@ -87,10 +120,32 @@ const Login = (props) => {
                       </CInputGroupPrepend>
                       <CInput onChange={(e)=>setPassword(e.target.value)} type="password" placeholder="Contraseña" autoComplete="current-password" />
                     </CInputGroup>
+                    {showInput && (
+                      <>
+                      <Alert style={{marginBottom:"1rem"}}variant="outlined" severity="warning">
+                        Ingresa el token
+                      </Alert>
+                      <Typography variant="h6" gutterBottom><span>{secret}</span> </Typography>
+                      
+
+                      <CInputGroup className="mb-4">
+                      <CInputGroupPrepend>
+                        <CInputGroupText>
+                          <CIcon name="cil-lock-locked" />
+                        </CInputGroupText>
+                      </CInputGroupPrepend>
+                      <CInput onChange={(e)=>setToken(e.target.value)} type="text" placeholder="Ingresa token secreto" />
+                    </CInputGroup>
+                      </>
+                      
+                    )}
                     <CRow>
                       <CCol xs="6">
+                         {showInput ? <CButton onClick={handleSubmitToken} color="success" className="px-4">Iniciar Sesión</CButton> 
+                        :
                         <CButton onClick={handleSubmit} color="success" className="px-4">Iniciar Sesión</CButton>
-                      </CCol>
+                        } 
+                    {/* <CButton onClick={handleSubmit} color="success" className="px-4">Iniciar Sesión</CButton> */}                     </CCol>
                     </CRow>
                   </CForm>
                 </CCardBody>

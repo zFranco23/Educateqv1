@@ -11,6 +11,8 @@ import CIcon from '@coreui/icons-react'
 import BackContext from 'src/Provider/BackContext'
 import { Typography } from '@material-ui/core'
 
+import logo from './12.jpeg'
+
 
 const TheHeaderDropdown = ({ga}) => {
 
@@ -25,15 +27,15 @@ const TheHeaderDropdown = ({ga}) => {
       direction="down"
     >
       <div style={{display:"flex" , alignItems:"center"}}>
-        <Typography variant="h6"> ¡ Hola de Nuevo , {userName} !</Typography>
+        <Typography variant="h6"> ¡  Bienvenido , {userName} !</Typography>
         <CDropdownToggle className="c-header-nav-link" caret={false}>
           
           <div className="c-avatar">
             <CImg
-              src={'avatars/11.jpg'}
+              src={logo}
               className="c-avatar-img"
               alt="admin@bootstrapmaster.com"
-            />
+            /> 
           </div>
         </CDropdownToggle>
       </div>

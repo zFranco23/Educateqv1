@@ -6,6 +6,8 @@ import { Grid, CircularProgress , makeStyles,TextField, MenuItem} from '@materia
 import BackContext from 'src/Provider/BackContext';
 import { CAlert, CButton, CCard,CCardBody,CCardHeader } from '@coreui/react';
 
+import CloseIcon from '@material-ui/icons/Close';
+
 
 
 const styles_2=makeStyles({
@@ -39,11 +41,14 @@ function Semanales() {
     const [promNotas,setPromNotas]=useState([]);
     const [alumnMax,setAlumnMax]=useState(null);
     const [alumnMin,setAlumnMin]=useState({});
+    const [arrayNotasMax,setArrayNotasMax]=useState([]);
+    const [arrayNotasMin,setArrayNotasMin]=useState([]);
     /*Graficas*/
     const [neutral, setNeutral] = useState([]);
     const [aprobados, setAprobados] = useState([]);
     const [desaprobados, setDesaprobados] = useState([]);
 
+    const [visible,setVisible]=useState(false);
     const urlCursos="https://api-colegio-g12.herokuapp.com/escuela/buscar-alumnos-del-tutor";
     const urlExamenes="https://api-colegio-g12.herokuapp.com/escuela/ver-examenSemanal";
 
@@ -205,8 +210,10 @@ function Semanales() {
     //Hallar el mas bajito
 
     function getStudent(id){
+        setVisible(true);
         let arrayData=new Array();
         let promNotas=new Array();
+        let arrayArrayNotas=new Array();
         const arraySemanas=["1","2","3","5","6","7"];
         arraySemanas.forEach((semana)=>{
             const a=examenes.filter(exam => exam.curso==id && exam.semana==semana);
@@ -217,22 +224,28 @@ function Semanales() {
         //Para cada alumno
         if(alumnos.length>0 && examenes.length>0){
             let suma;
+            let b;
             alumnos.forEach(({id})=>{
                 //Recorrer ahora el array de examenes en cada semana
                 suma=0;
+                b=new Array();
                 //6 veces
                 arrayData.forEach((arraySemana)=>{
                     //Accedemos a cada los examenes en el cual solo aparecerá 1 vez
                     const jsonNota=arraySemana.find(examen => examen.alumno == id );
                     suma+=jsonNota.nota;
+                    b.push(jsonNota.nota);
                     //console.log(jsonNota);
                 })
+                arrayArrayNotas.push(b);
                 promNotas.push(suma/6);
             })
             const indexBueno=promNotas.indexOf((Math.max.apply(null,promNotas)));
             const indexMalo=promNotas.indexOf((Math.min.apply(null,promNotas)));
             setAlumnMax(alumnos[indexBueno]);
             setAlumnMin(alumnos[indexMalo]);
+            setArrayNotasMax(arrayArrayNotas[indexBueno]);
+            setArrayNotasMin(arrayArrayNotas[indexMalo]);
             setPromNotas(promNotas);
         }
         
@@ -447,24 +460,25 @@ function Semanales() {
                 />
             }
             <CCard style={{marginTop:"1rem"}}>
-                <CCardHeader style={{display:"flex",justifyContent:"center"}}>
+                <CCardHeader style={{display:"flex",flexWrap:"wrap",justifyContent:"center",alignItems:"center"}}>
                     <Typography variant="h6">Cuadro de mérito</Typography>
                     <CButton style={{marginLeft:"1rem"}}color="info" variant="outline" onClick={()=>getStudent(idCurso)}>Traer Datos</CButton>
+                    {visible && <CloseIcon style={{marginLeft:"1rem"}} onClick={()=>setVisible(false)}/>}
                 </CCardHeader>
-                {alumnMax && <CCardBody>
-                    <Typography variant="h6">Alumno con menor rendimiento : {`${alumnMin.nombre} ${alumnMin.apellido}`}</Typography>
+                {(visible && alumnMax && arrayNotasMax) && <CCardBody>
+                    <Typography variant="h6" color="error" >Alumno con menor rendimiento : {`${alumnMin.nombre} ${alumnMin.apellido}`}</Typography>
                     <Typography variant="h6">Alumno con mayor rendimiento : {`${alumnMax.nombre} ${alumnMax.apellido}`}</Typography>
                     <CChartLine
                         datasets={[
                         {
-                            label: 'Data One',
+                            label: `${alumnMin.nombre}`,
                             backgroundColor: 'rgb(228,102,81,0.9)',
-                            data: [30, 39, 10, 50, 30, 70, 35]
+                            data: arrayNotasMin
                         },
                         {
-                            label: 'Data Two',
+                            label: `${alumnMax.nombre}`,
                             backgroundColor: 'rgb(0,216,255,0.9)',
-                            data: [39, 80, 40, 35, 40, 20, 45]
+                            data: arrayNotasMax
                           }
 
                         ]}
