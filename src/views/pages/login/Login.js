@@ -57,8 +57,9 @@ const Login = (props) => {
       if(ok){
         //Setear datos del user
         setUserId(_id);
+        props.ga();
         setUserName(nombre);
-        setIdSecret(idUser);
+        /* setIdSecret(idUser); */
          /* //Authenticator
         const {data}=await axios.post(urlRegister);
         console.log(data.id,data.secret);
@@ -66,7 +67,7 @@ const Login = (props) => {
         setSecret(data.secret); */
 
         //Pasar a authenticator
-        setShowInput(true);  
+        /* setShowInput(true);  */ 
       }
     } catch (error) {
       alert("Usuario incorrecto")
@@ -141,10 +142,7 @@ const Login = (props) => {
                     )}
                     <CRow>
                       <CCol xs="6">
-                         {showInput ? <CButton onClick={handleSubmitToken} color="success" className="px-4">Iniciar Sesión</CButton> 
-                        :
                         <CButton onClick={handleSubmit} color="success" className="px-4">Iniciar Sesión</CButton>
-                        } 
                     {/* <CButton onClick={handleSubmit} color="success" className="px-4">Iniciar Sesión</CButton> */}                     </CCol>
                     </CRow>
                   </CForm>

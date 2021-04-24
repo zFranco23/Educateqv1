@@ -6,6 +6,7 @@ import { CButton } from '@coreui/react';
 import BackContext from '../../../Provider/BackContext';
 import { Typography } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
+import {Grid} from '@material-ui/core'
 
 import axios from 'axios';
 import { AlertTitle } from '@material-ui/lab';
@@ -249,24 +250,25 @@ function Observaciones() {
     return (
         <div style={{ maxWidth: "100%"}}>
           <TextField
-                id="outlined-select-currency-native"
-                select
-                value={curso}
-                onChange={handleCurso}
-                SelectProps={{
-                    native: true,
-                }}
-                helperText="Seleccione un Curso"
-                variant="outlined"
-            >
-                {cursos.map((option) => (
-                <option key={option.value} value={option.value}>
-                {option.label}
-                </option>
-                ))}
-            </TextField><br/><br/>
-          <div style={{display:"flex",flexWrap:"wrap",justifyContent:"space-between"}}>
-          <MaterialTable
+                    id="outlined-select-currency-native"
+                    select
+                    value={curso}
+                    onChange={handleCurso}
+                    SelectProps={{
+                        native: true,
+                    }}
+                    helperText="Seleccione un Curso"
+                    variant="outlined"
+                >
+                    {cursos.map((option) => (
+                    <option key={option.value} value={option.value}>
+                    {option.label}
+                    </option>
+                    ))}
+          </TextField>
+          <Grid container>
+            <Grid item xs={12} md={6}>
+            <MaterialTable
                 columns={columns}
                 data={dataAlumno}
                 title="Sección A"
@@ -291,8 +293,9 @@ function Observaciones() {
                         actions:'Acciones'
                     }
                 }}
-      
             />
+            </Grid>
+            <Grid item xs={12} md={6}>
             <div style={{display:"flex",flexWrap:"wrap",flexDirection:"column",alignItems:"center",paddingBottom:"4rem",justifyContent:"space-evenly"}}>
               {alumnoInsertar?.nombre &&  <Typography variant="h6">Editando a : {`${alumnoInsertar.nombre} ${alumnoInsertar.apellido}`}</Typography>}
               { errorInsert &&  <Alert variant="outlined" severity="error"><AlertTitle>Error</AlertTitle><strong>No se pudo registrar la observación.</strong> </Alert>}
@@ -307,21 +310,27 @@ function Observaciones() {
                   id="outlined-multiline-static"
                   label="Observación"
                   value={observacion}
-                  style={{width:'350px'}}
+                  style={{marginTop:"1rem",width:'350px'}}
                   multiline
                   rows={8}
                   variant="outlined"
                   onChange={handleObservacion}
               />
-              <div style={{display:"flex",justifyContent:""}}>
+              <div style={{display:"flex",marginTop:"1rem",justifyContent:"center"}}>
                 <CButton color="success" onClick={postData}>{hasObservation? "Actualizar" : "Guardar" }</CButton>
                 <CButton style={{marginLeft:"1rem"}} color="primary" onClick={cleanData}>Cancelar</CButton>
                 {hasObservation && <CButton style={{marginLeft:"1rem"}} color="danger" onClick={deleteObs}>Eliminar</CButton>}
               </div>
               
             </div>
+            </Grid>
+          </Grid>
+          
+          
+          
+          
             
-          </div>
+          
           
             
         </div>
